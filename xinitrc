@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# Add custom binaries to path
+export PATH="/home/linolium/sync/bin:/home/linolium/bin:$PATH"
+
+# Start some apps right off the bat
+urxvt &
+
+# Set the wallpaper
+feh --bg-scale .wallpaper.jpg &
+
+# Cache binaries for dmenu
+find `echo $PATH | sed -e 's@:@ \n@g' | uniq | tr -d '\n'` | sed -e 's@.*/@@' | sort | uniq >| /tmp/linolium-dmenu
+
+# Set up an icon tray (alignment, size, background, window type)
+if [ $(hostname) == "ginko" ]; then
+	trayer --edge top --align left --margin 1884 \
+	  --widthtype pixel --width 35 --height 12 --expand true \
+	  --transparent true --tint 0x000000 --alpha 0 \
+	  --SetDockType true --SetPartialStrut true &
+elif [ $(hostname) == "jimmy" ]; then
+	trayer --edge top --align left --margin 1419 \
+	  --widthtype pixel --width 20 --height 12 --expand true \
+	  --transparent true --tint 0x000000 --alpha 0 \
+	  --SetDockType true --SetPartialStrut true &
+fi
+
+# Required for GTK themes to look nice
+gnome-settings-daemon &
+
+# Unlock the keyring and start the gnome keyring daemon
+eval `gnome-keyring-daemon`
+export GNOME_KEYRING_SOCKET
+export GNOME_KEYRING_PID
+echo 'BlahBlah103' | pam-keyring-tool -u -s &
+
+# Try and start synergy on startup
+if [ $(hostname) == "ginko" ]; then
+	(killall synergyc >/dev/null; nohup synergyc -1 ginko >/dev/null 2>/dev/null) &
+elif [ $(hostname) == "jimmy" ]; then
+	synergys &
+fi
+
+# Start redshift
+if [ $(hostname) == "ginko" ]; then
+	redshift -l 49.2618:-123.2415 -t 6500:5000 &
+elif [ $(hostname) == "jimmy" ]; then
+	redshift -l 49.2618:-123.2415 -t 6500:4500 &
+fi
+
+# Keyboard stuff
+(xmodmap -pke > .xmodmap.reset && xmodmap .xmodmap && xbindkeys) &
+xset r rate 220 27 &
+
+# Special key bindings
+#xbindkeys &
+
+## Horizontal and vertical scrolling with trackpoint
+xinput set-int-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 8 1
+xinput set-int-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 8 2
+xinput set-int-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 8 6 7 4 5
+
+# Tray
+nm-applet &
+
+# Set default cursor
+xsetroot -cursor_name left_ptr
+
+# Start SCIM for Chinese input
+export XMODIFIERS=@im=SCIM
+export GTK_IM_MODULE="scim"
+export QT_IM_MODULE="scim"
+scim -d
+
+# Window manager
+#exec ck-launch-session xmonad
+exec xmonad
