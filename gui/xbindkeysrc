@@ -1,0 +1,28 @@
+"ssh ginko mpc toggle"
+XF86AudioPlay
+
+"ssh ginko mpc stop"
+XF86AudioStop
+
+"ssh ginko mpc prev"
+XF86AudioPrev
+
+"ssh ginko mpc next"
+XF86AudioNext
+
+#"ssh ginko mpc seek -::5"
+"ssh ginko mpc volume -5"
+XF86ApplicationLeft
+
+#"ssh ginko mpc seek +::5"
+"ssh ginko mpc volume +5"
+XF86ApplicationRight
+
+#"sudo shutdown -r now"
+#XF86Launch1
+
+"~/dvol -d 5"
+XF86AudioLowerVolume
+
+"~/dvol -i 5"
+XF86AudioRaiseVolume

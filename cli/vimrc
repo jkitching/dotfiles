@@ -4,6 +4,10 @@ set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/afte
 set grepprg=grep\ -nH\ $*
 set mouse=a
 filetype plugin indent on
+set bs=2 " allow backspace on old text
+let mapleader = ","
+let maplocalleader = ","
+"set matchpairs=(:),{:},[:] " fix slow performance in .erb templates
 
 " visual options
 set number
@@ -11,13 +15,17 @@ syntax on
 colorscheme ron
 set t_Co=8 " disable 256-color support
 
+" show spacing visually
+set list listchars=tab:»·,trail:·,extends:$,nbsp:=
+
+" tab options
+nmap <C-H> :tabprev<CR>
+nmap <C-L> :tabnext<CR>
+
 " set searching
 set hlsearch
 " Press Space to turn off highlighting and clear any message already displayed.
 nnoremap <silent> <Enter> :nohlsearch<Bar>:echo<CR>
-
-" W writes with sudo privileges
-command W w !sudo tee % > /dev/null
 
 " return to last line and character in file when opened
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -28,6 +36,18 @@ iab dts <C-R>=strftime("%c")<CR>
 " automatically give executable permissions if file begins with #!
 " and contains '/bin/' in the path
 au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | silent !chmod a+x <afile>
+
+" search for Google contacts
+imap <C-F> <ESC>:r!google-contacts-lookup <cword><CR><ESC>
+
+" set tab width in spaces
+command! -nargs=1 Tab call s:SetTabs('<args>')
+function s:SetTabs(width)
+  exec "set tabstop=" . a:width
+  exec "set shiftwidth=" . a:width
+  exec "set softtabstop=" . a:width
+  exec "set expandtab"
+endfunction
 
 " -------- Prolog --------------------------------------------------------
 
@@ -45,17 +65,6 @@ autocmd BufRead,BufNewFile *.py,*.html set tabstop=4 shiftwidth=4 smarttab expan
 autocmd BufRead,BufNewFile *.py,*.html set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class  
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 
-command! -nargs=1 Tab call s:SetTabs('<args>')
-function s:SetTabs(width)
-  exec "set tabstop=" . a:width
-  exec "set shiftwidth=" . a:width
-  exec "set softtabstop=" . a:width
-  exec "set expandtab"
-endfunction
-
-autocmd BufReadPost *.php,*.module,*.install,*.theme,*.test set syntax=php filetype=php
-autocmd BufReadPost *.php,*.module,*.install,*.theme,*.test Tab 2
-
 set tags+=$HOME/.vim/tags/python.ctags
 
 "python << EOF
@@ -66,6 +75,15 @@ set tags+=$HOME/.vim/tags/python.ctags
 "    if os.path.isdir(p):
 "        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
 "EOF
+
+" -------- PHP ----------------------------------------------------------
+
+autocmd BufReadPost *.php,*.module,*.install,*.theme,*.test set syntax=php filetype=php
+autocmd BufReadPost *.php,*.module,*.install,*.theme,*.test Tab 2
+
+" -------- Python -------------------------------------------------------
+
+autocmd BufReadPost *.rb,*.erb Tab 2
 
 " -------- LaTeX --------------------------------------------------------
 
@@ -86,15 +104,65 @@ let g:Tex_CompileRule_pdf = 'dvipdf $*.dvi'
 "let g:Tex_CompileRule_pdf = 'pdflatex --interaction=nonstopmode $*'
 "let g:Tex_CompileRule_pdf = 'ps2pdf $*.ps'
 
-" -------- ctags/taglist --------------------------------------------------------
+" -------- ctags/taglist ------------------------------------------------
 
 " don't show variables for php!
 let tlist_php_settings = 'php;c:class;f:function'
 " let Tlist_Sort_Type = "name"
-:nmap <F3> :TlistToggle<cr>
+nmap <F3> :TlistToggle<cr>
 " allow file to be open without saving
 set hidden
 
-" tab options
-nmap <C-H> :tabprev<CR>
-nmap <C-L> :tabnext<CR>
+" -------- mutt/address book --------------------------------------------
+
+au FileType mail call MuttMode()
+function! MuttMode()
+    " It seems that when you've started completion, vim chooses to ignore
+    " these mappings. That means we can simply 'invoke' the preferred
+    " completion method and then C-n and C-p will behave as they should while
+    " the menu is present
+    ino <C-n> <C-X><C-U>
+    ino <C-p> <C-X><C-U>
+
+    fun! GoobookCompleteFn(findstart, base)
+        if a:findstart
+            " locate the start of the word
+            let line = getline('.')
+            let start = col('.') - 1
+            while start > 0 && line[start - 1] =~ '[^:,]'
+              let start -= 1
+            endwhile
+            while start < col('.') && line[start] =~ '[:, ]'
+                let start += 1
+            endwhile
+            return start
+        else
+            let res = []
+            let query = substitute(a:base, '"', '', 'g')
+            let query = substitute(query, '\s*<.*>\s*', '', 'g')
+            for m in split(system("google-contacts-lookup " . shellescape(query)), "\n")
+                call add(res, m)
+            endfor
+            return res
+        endif
+    endfun
+
+    set completefunc=GoobookCompleteFn
+endfunction
+
+" -------- Vundle packages ----------------------------------------------
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
+Bundle 'scrooloose/nerdtree'
+Bundle 'godlygeek/tabular'
+Bundle 'tpope/vim-fugitive'
+Bundle 'SudoEdit.vim'
+
+" W writes with sudo privileges
+command W SudoWrite
+
+" NERDTree bindings
+" guarantees that the NERDTrees for all tabs will be one and the same (maybe?)
+nnoremap <silent> <C-B> :NERDTreeToggle \| :silent NERDTreeMirror<CR>

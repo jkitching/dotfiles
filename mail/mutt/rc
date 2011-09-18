@@ -1,0 +1,254 @@
+#####################################################################
+# mutt configuration file
+#####################################################################
+
+# This rc file is known to work with mutt-1.5.20.
+# Also required:
+#   * [mutt-sidebar] sidebar patch applied to mutt [.mutt/, .mutt/muttrc]
+#   * [offlineimap ] offlineimap to retrieve email [.offlineimap*]
+#   * [msmtp-git   ] set up with msmtpQ patch      [.msmtprc w/gpg-agent]
+#   * [goobook-git ] goobook looks up contacts     [.goobookrc* w/gpg-agent]
+#   * [urlview     ] urlview to select URLs from messages [.urlview]
+#   * (or can use urlscan-git)
+#   * .mutt/mailcap for opening attachments
+#   * muttils python egg
+
+#####################################################################
+# outgoing mail
+#####################################################################
+
+set sendmail="msmtpQ"
+set sendmail_wait=-1
+set use_from=yes
+set realname="Joel Kitching"
+set from="joel@jkweb.ca"
+set envelope_from=yes
+set edit_headers=yes
+
+#####################################################################
+# mail listing
+#####################################################################
+
+set sort="threads"
+set sort_aux="last-date-received"
+set menu_scroll=yes
+
+#####################################################################
+# keystroke/gui customization
+#####################################################################
+
+# Hide all headers, unignore important ones, and reorder them for skimmability.
+ignore *
+unignore Date: From: Organization: To: Cc: Reply-To: Subject:
+hdr_order Date: Subject: From: To: Cc: Reply-To: Organization:
+
+auto_view text/html
+alternative_order text/plain text/html
+set sleep_time=0 # don't pause on informational messages
+set wait_key=no # don't ask for a key after a shell command
+set auto_tag=yes # require "tag-prefix" (;) typed for group operations
+set pager_stop # don't fall thorugh to the next message in the pager
+set folder_format="%2C %t %N %8s %d %f"
+
+# re-arrange status bars and show pager on message view
+set help=no
+set status_on_top=yes
+set pager_index_lines=10
+
+# which file to consult when attempting to display MIME bodies
+set mailcap_path=~/.mutt/mailcap
+
+# the same but for certificates
+set certificate_file=~/.mutt/certificates
+
+bind generic,attach,alias,pager,pgp,postpone,index,compose,browser i exit
+
+# Not sure why this can't be \Cg...
+macro index,pager G "<pipe-message>cat | viewhtmlmsg &<enter>"
+macro index,generic,pager <F11> "<shell-escape>ssh linolium@jkweb.ca getmail<enter>"
+macro index,generic,pager <F12> "<shell-escape>offlineimap2stage<enter>"
+macro index,pager,attach   \Cb     ":set pipe_decode\n|urlview\n:unset pipe_decode\n" 
+
+macro index,pager c "<change-folder>" "open a different folder"
+macro index,pager C "<copy-message>" "copy a message to a mailbox"
+macro index,pager M "<save-message>" "move a message to a mailbox"
+macro compose A "<attach-message>" "attach message(s) to this message"
+
+# Delete is re-bound to move messages to Trash.
+# They will be filed as ham by a cron script later.
+macro index,pager d "s=Trash\n" "move message to trash"
+
+# Spam that SA missed is manually sent to the junkmail folder
+macro index,pager X "s=Junk\n" "file as Spam"
+
+# vim-like bindings for page up and page down
+macro index,pager,generic \cu "<previous-page>"
+macro index,pager,generic \cd "<next-page>"
+
+# search: overrides the "mark as new message"
+bind pager,index,browser N search-opposite
+
+macro generic,attach,alias,pager,pgp,postpone,index,compose,browser <F5> ":source ~/.mutt/muttrc<enter>" "reload the .muttrc file..."
+
+#####################################################################
+# colours
+#####################################################################
+
+# This has some conflicting lines in it which should be corrected.
+
+# Colours I like
+color normal white black
+color quoted green black
+color quoted1 cyan black
+color quoted2 green black
+color quoted3 cyan black
+color indicator white red
+color signature blue black
+color hdrdefault yellow black
+color status white blue
+color message white black
+color error red black
+color body magenta black "(ftp|http)://[^ ]+"
+color body magenta black [-a-z_0-9.]+@[-a-z_0-9.]+
+
+color hdrdefault white black  # headers white on black
+color header brightgreen black ^From:  # sender's name in green
+color quoted cyan black  # quoted text in blue
+color signature red black   # signature in red
+
+# Colours I haven't changed yet
+color tree magenta black
+color tilde magenta black
+color markers brightcyan black
+color attachment brightmagenta black
+color search black green
+color underline brightgreen black
+
+color index magenta black '(~n 1-1)'
+color index green black '(~n 2-2)'
+color index brightblue black '(~n 3-3)
+color index white black '(~n 4-9)'
+color index brightred black '(~n 10-99)'
+
+# Should maybe factor out into pulling from goobook or a mail
+# sorting filter.
+color index green black '(~f"Louie Dinh.*")'
+color index green black '(~f"Bill Kitching.*")'
+color index green black '(~f"Windy Hill Estate.*")'
+color index green black '(~f"Cheryl Kitching.*")'
+color index green black '(~f"Maria Ivanova.*")'
+color index green black '(~f"Ryan Kitching.*")'
+color index blue black '(~f"Facebook")'
+
+color header cyan black .
+color header yellow black ^From
+color header yellow black ^Subject
+color body yellow black [_a-z\.\$A-Z0-9-]+@[a-zA-Z0-9\./\-]+
+color body yellow black (http|ftp)://[_a-zA-Z0-9\?\=\&\@\%\#\:\,\./~\-]+
+color quoted green black
+color signature cyan black
+color attachment yellow black
+color tree white black
+color indicator black cyan
+color status white blue
+color tilde blue black
+color normal white black
+#color index green black ~N
+color index brightwhite default ~N         # color for new messages
+color index brightwhite default ~O         # color for new messages
+
+#####################################################################
+# ask or do not ask, or what is the default
+#####################################################################
+
+set bounce=yes
+set postpone=ask-yes           # ask for postponing when doing an Abort.
+set print=ask-yes              # ask whether you really want to print.
+set quit=no
+set delete=yes                 # ask for confirmation when deleting messages?
+set noconfirmappend            # don't ask when moving messages
+set include=yes                # quote message, when replying
+set abort_nosubject=no         # Abort, if message has no subject.
+set reply_to=yes               # Use or ignore Reply-To.
+set fast_reply=yes             # Accept to and subject when replying
+set recall=no                  # don't ask for using postponed message.
+set abort_unmodified=no        # Abort, if message wasn't edited.
+set honor_followup_to=ask-yes  # Ask whether to honor Mail-Followup-To header.
+set mime_forward=ask-no        # use MIME when forwarding mails.
+set mime_forward_rest=ask-no   # forward attachments w/o autoview from attmenu
+
+#####################################################################
+# sidebar
+#####################################################################
+
+# set up the sidebar, default not visible
+set sidebar_width=28
+set sidebar_visible=no
+set sidebar_delim=' '
+#set sidebar_sort=yes
+
+# color of folders with new mail
+color sidebar_new yellow default
+
+# ctrl-n, ctrl-p to select next, prev folder
+# ctrl-o to open selected folder
+bind index \CP sidebar-prev
+bind index \CN sidebar-next
+bind index \CO sidebar-open
+bind pager \CP sidebar-prev
+bind pager \CN sidebar-next
+bind pager \CO sidebar-open
+
+# I don't need these.  just for documentation purposes.  See below.
+# sidebar-scroll-up
+# sidebar-scroll-down
+
+# b toggles sidebar visibility
+macro index b '<enter-command>toggle sidebar_visible<enter><refresh>'
+macro pager b '<enter-command>toggle sidebar_visible<enter><redraw-screen>'
+
+# Remap bounce-message function to "B"
+bind index B bounce-message
+
+#####################################################################
+# address book
+#####################################################################
+
+set query_command="goobook query '%s'"
+bind editor <Tab> complete-query
+bind editor ^T complete
+macro index,pager a "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
+
+#####################################################################
+# status format
+#####################################################################
+
+## status_format - format of summary on the current folder in the index
+## meta strings:
+##	-----f-h---lmn-p--st-v----  lower case letters (09)
+##	------------M----------X--  upper case letters (02)
+## %d      the number of messages with the flag 'delete'  (v64)
+## %f      the full pathname of the current mailbox
+## %h      local hostname
+## %l      size (in bytes) of the current mailbox
+## %m      the number of messages in the mailbox
+## %M      the number of messages shown (i.e., which match the current limit)
+## %n      number of new messages in the mailbox
+## %p      number of postponed messages
+## %s      current sorting mode
+## %t      number of tagged messages
+## %v      Mutt version string
+## %>X     right justify the rest of the string and pad with "X"
+## %|X     pad to the end of the line with "X"
+## Examples:
+#set status_format="%v: %f (%s) [%?M/?%m]  [flags:%?t tagged,?%n new%?p post?]"
+#set status_format="%v: %f (%s) [%?M/?%m]  [flags:%?t tagged,?%n new]"
+#set status_format="%v: %f (%s) [%M/%m]\n[flags:n=%n,D=%d,t=%t,!=%F]"
+#set status_format="%v: %f (%s) [%M/%m]  [flags:n=%n,t=%t]"
+#set status_format="%v:    (%s) [%M/%m]  [flags:n=%n,t=%t]"
+#set status_format="%v:    (%s) [%M/%m]  [flags:n:%n,t:%t,p:%p]"
+#set status_format="%v:    (%s) [%M/%m]  [flags:%?02n new?,t:%t]"
+#set status_format="%v: %f (%s) [%M/%m]  [flags:%n new,%?t tagged?]"
+#set status_format="%v: %f (%s) [%M/%m;%l bytes]  [N=%n,*=%t,post=%p]"
+#set status_format="%v: %f (%s) [%M/%m] [N=%n,*=%t,post=%p,new=%b]"
+set status_format="%m messages (%u unread)  %> (%P) %f [%l]"

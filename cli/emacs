@@ -1,0 +1,27 @@
+; Custom configuration
+(xterm-mouse-mode 1)
+(menu-bar-mode 0)
+
+;; Make kill/yank work with the X clipboard
+;(global-set-key "\C-w" 'clipboard-kill-region)
+;(global-set-key "\M-w" 'clipboard-kill-ring-save)
+;(global-set-key "\C-y" 'clipboard-yank)
+
+; Org-mode stuff
+(require 'org-install)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(org-agenda-files (quote ("~/todo.org"))))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )

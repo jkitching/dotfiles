@@ -1,0 +1,27 @@
+Host plebb
+HostName jkweb.ca
+User linolium
+
+Host ginko
+HostName ginko
+User linolium
+
+Host jimmy
+HostName jimmy
+User linolium
+
+Host lulu
+HostName lulu.ugrad.cs.ubc.ca
+User m1n6
+
+Host galiano
+HostName galiano.ugrad.cs.ubc.ca
+User m1n6
+
+Host cs221
+HostName lulu.ugrad.cs.ubc.ca
+User cs221
+
+Host micd
+HostName mathicando.com
+User mathican

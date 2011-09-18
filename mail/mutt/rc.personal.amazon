@@ -1,0 +1,24 @@
+#####################################################################
+# includes
+#####################################################################
+
+source ~/.mutt/rc.personal
+
+#####################################################################
+# mailbox
+#####################################################################
+
+# Don't store mail locally.
+
+set spoolfile="imap://jkweb.ca/INBOX"
+set folder="imap://jkweb.ca/"
+set mbox="imap://jkweb.ca/INBOX"
+set record="=Sent"
+set postponed="=Drafts"
+
+#####################################################################
+# keystroke/gui customization
+#####################################################################
+
+# Remove offlineimap binding
+macro index,generic,pager <F12> "<shell-escape>cat /dev/null<enter>"

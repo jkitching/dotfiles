@@ -3,7 +3,16 @@
 # Add custom binaries to path
 export PATH="/home/linolium/sync/bin:/home/linolium/bin:$PATH"
 
-# Start some apps right off the bat
+# Run the GPG agent
+envfile="${HOME}/.gnupg/gpg-agent.env"
+if test -f "$envfile" && kill -0 $(grep GPG_AGENT_INFO "$envfile" | cut -d: -f 2) 2>/dev/null; then
+	eval "$(cat "$envfile")"
+else
+	eval "$(gpg-agent --daemon --write-env-file "$envfile")"
+fi
+export GPG_AGENT_INFO
+
+# Start a terminal right off the bat
 urxvt &
 
 # Set the wallpaper
@@ -49,7 +58,7 @@ elif [ $(hostname) == "jimmy" ]; then
 fi
 
 # Keyboard stuff
-(xmodmap -pke > .xmodmap.reset && xmodmap .xmodmap && xbindkeys) &
+(xmodmap -pke > .xmodmap.reset && xmodmap .xmodmap) &
 xset r rate 220 27 &
 
 # Special key bindings

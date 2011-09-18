@@ -1,0 +1,109 @@
+#####################################################################
+# includes
+#####################################################################
+
+source ~/.mutt/rc
+
+#####################################################################
+# mailbox
+#####################################################################
+
+set mbox_type=Maildir
+set spoolfile="~/.maildir/INBOX"
+set folder="~/.maildir"
+set mbox="~/.maildir/INBOX"
+set mask="!^\\.[^.]"
+set record="=Sent"
+set postponed="=Drafts"
+set tunnel="ssh -q linolium@jkweb.ca dovecot --exec-mail imap"
+set header_cache="~/.mutt/headercache.personal"
+
+#mailboxes `find ~/.maildir -maxdepth 1 -type d ! \( -name .maildir -or -name Jobs -or -name 'Mailing Lists' -or -name Other \) -printf "+'%f' " | sort`
+mailboxes ='INBOX'
+mailboxes ='INBOX.Facebook'
+mailboxes ='INBOX.Actionable'
+mailboxes ='INBOX.Actionable.Taxes'
+mailboxes ='Personal'
+mailboxes ='Sent'
+mailboxes ='Drafts'
+mailboxes ='Trash'
+mailboxes ='Junk'
+mailboxes ='Craigslist'
+mailboxes ='University'
+mailboxes ='University.Common Energy'
+mailboxes ='University.Co-op'
+mailboxes ='University.GALA'
+mailboxes ='University.Housing'
+mailboxes ='University.Personal'
+mailboxes ='University.Pride UBC'
+mailboxes ='University.TA CPSC 221'
+mailboxes ='University.Tri-Mentoring'
+mailboxes ='Jobs.Bedrock Granite'
+mailboxes ='Jobs.Bill Koochin'
+mailboxes ='Jobs.Common Craft'
+mailboxes ='Jobs.Cristy'
+mailboxes ='Jobs.Dabble DB'
+mailboxes ='Jobs.HR Metrix'
+mailboxes ='Jobs.ImageX Media'
+mailboxes ='Jobs.ImageX Media.DrupalCon'
+mailboxes ='Jobs.Irish Madness'
+mailboxes ='Jobs.Ishtar'
+mailboxes ='Jobs.Kemi'
+mailboxes ='Jobs.Kerbside'
+mailboxes ='Jobs.Math I Can Do'
+mailboxes ='Jobs.Ravi'
+mailboxes ='Jobs.Raymond Group'
+mailboxes ='Jobs.Soccer'
+mailboxes ='Mailing Lists.ESUG'
+mailboxes ='Mailing Lists.Seaside-dev'
+mailboxes ='SoC 2009'
+mailboxes ='SoC 2010'
+mailboxes ='Other.High School'
+mailboxes ='Other.Inquiries'
+mailboxes ='Other.Photo Exhibit'
+mailboxes ='Other.Purchases'
+mailboxes ='Other.Registrations'
+mailboxes ='Other.Self'
+mailboxes ='WorldSkills'
+
+# Don't show these mailboxes, since they are empty and unused.
+#mailboxes ='Archives'      # to delete
+#mailboxes ='INBOX.Trash'   # to delete
+#mailboxes ='Jobs'
+#mailboxes ='Mailing Lists'
+#mailboxes ='Other'
+#mailboxes ='Outbox'
+
+# Macros for mailboxes in editor mode.  I found that I didn't end
+# up using them, but including them for the future just in case.
+#macro editor '#in' '=INBOX'
+#macro editor '#fb' '=INBOX.Facebook'
+#macro editor '#soc' '=Jobs.Soccer'
+#macro editor '#per' '=Personal'
+#macro editor '#uni' '=University'
+
+#####################################################################
+# outgoing mail
+#####################################################################
+
+set sendmail="msmtpQ"
+set sendmail_wait=-1
+set use_from=yes
+set realname="Joel Kitching"
+set from=joel@jkweb.ca
+set envelope_from=yes
+set edit_headers=yes
+
+#####################################################################
+# hook customization
+#####################################################################
+
+send-hook "~t @reply\.facebook\.com" "my_hdr From: jkitching@mailbolt.com"
+
+#####################################################################
+# keystroke/gui customization
+#####################################################################
+
+macro index,pager 1 "<change-folder>=INBOX<enter>"
+macro index,pager 2 "<change-folder>=INBOX.Facebook<enter>"
+macro index,pager 3 "<change-folder>=INBOX.Actionable<enter>"

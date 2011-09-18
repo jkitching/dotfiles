@@ -1,0 +1,22 @@
+# F1 is previous and F2 is next
+bindkey -k k1 prev
+bindkey -k k2 next
+
+# resize window shortcuts
+#bindkey -k f- resize -1
+#bindkey -k f+ resize +1
+#bindkey -k fe resize =
+
+# general stuff
+shelltitle '# |'
+defscrollback 4096
+msgwait 1
+nonblock on
+
+# change the hardstatus settings to give an window list
+#backtick 1 0 0 /home/linolium/.bw.pl
+hardstatus alwayslastline
+hardstatus string '%{= kK}%-Lw%{= KW}%50>  %n%f %t %{= kK}%+Lw%< %{=kG}%-= %1`%D, %M %d, %C %A'
+
+# unicode support
+defutf8 on

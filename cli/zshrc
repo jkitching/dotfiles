@@ -1,4 +1,24 @@
 ##################################################################
+## oh-my-zsh
+
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
+
+# Theme: random or ~/.oh-my-zsh/themes/*
+ZSH_THEME="jnrowe"
+
+# Disable weekly auto-update checks
+DISABLE_AUTO_UPDATE="true"
+
+# Red dots to be displayed while waiting for completion
+COMPLETION_WAITING_DOTS="true"
+
+# Plugins: ~/.oh-my-zsh/plugins/*
+plugins=(rails git)
+
+source $ZSH/oh-my-zsh.sh
+
+##################################################################
 ## Notes
 ##
 ## Loop over command output with spaces in lines:
@@ -8,7 +28,6 @@
 ## Custom shortcuts
 
 # environment variables
-export EDITOR="vim"
 export TERM=rxvt-256color
 export DESKTOP="ginko"
 export LAPTOP="jimmy"
@@ -21,6 +40,10 @@ export PATH="/opt/squeak/bin:$PATH"
 export PATH="/opt/android-sdk/tools:$PATH"
 export PATH="/opt/android-sdk/platform-tools:$PATH"
 
+# system environment variables
+export EDITOR="vim"
+export BROWSER="firefox"
+
 # listing aliases
 alias ls='ls --color=auto'
 alias u="ls"
@@ -31,7 +54,7 @@ alias grep="grep --color"
 alias root="sudo su -"
 alias reboot="sudo shutdown -r now"
 alias poweroff="sudo shutdown -h now"
-alias flog="sudo tail -f /var/log/messages.log"
+alias flog="sudo tail -f `ls -t /var/log/messages* | head -1`"
 alias sync="unison -logfile ~/.unison.log"
 alias synergy="killall synergyc 2>/dev/null; nohup synergyc -1 ginko >/dev/null 2>/dev/null"
 alias vnc="rx11vnc -fs -l linolium $DESKTOP"
@@ -44,33 +67,67 @@ alias yaourt="yaourt --noconfirm"
 alias mplayer="mplayer -softvol -softvol-max 1000"
 alias cdmv="renamealbum --dest /mnt/storage/incoming/albums"
 alias usblp="sudo modprobe usblp && sleep 3 && sudo rmmod usblp"
+alias rtl="sudo rmmod r8192se_pci && sleep 1 && sudo modprobe r8192se_pci"
+alias alsamixer="alsamixer -c 0"
+alias emacs="emacs -nw"
+alias k9="kill -9"
+alias pg="ps ax | grep -v 'grep --color' | grep"
+pk () { pg "$1" | sed -e 's@^ *@@' | cut -d' ' -f1 | xargs kill }
+pk9 () { pg "$1" | sed -e 's@^ *@@' | cut -d' ' -f1 | xargs kill -9 }
+alias pgo="pg offlineimap"
+alias pko="pk9 offlineimap"
+alias ff="find . | grep -i"
+alias rc="source ~/.zshrc"
+alias rce="vim ~/.zshrc && rc"
+alias mutt="mutt -F ~/.mutt/rc.personal"
+#rm () { mv $* /tmp/wastebasket }
+zget () {
+  file=`basename $1`
+  ext=`echo $file | awk -F. '{print $(NF-1) "." $NF}'`
+  if [[ $ext = 'tar.gz' ]]; then
+    curl $1 | tar xfvz -
+  elif [[ $ext = 'tar.bz2' ]]; then
+    curl $1 | tar xfvj -
+  else
+    echo "unknown extension: $file"
+  fi
+}
 
 # quick folders
 alias 221="cd ~/school/cs221ta"
 alias 322="cd ~/school/cs322"
 alias 411="cd ~/school/cs411"
-export cs221="/home/linolium/school/cs221ta"
-export cs322="/home/linolium/school/cs322"
-export cs411="/home/linolium/school/cs411"
-export math="/home/linolium/school/math342"
-export chin="/home/linolium/school/chinese"
-export coop="/home/linolium/school/co-op"
+export cs221="/home/linolium/school.old/cs221ta"
+export cs322="/home/linolium/school.old/cs322"
+export cs411="/home/linolium/school.old/cs411"
+export math="/home/linolium/school.old/math342"
+export chin="/home/linolium/school.old/chinese"
+export coop="/home/linolium/school.old/co-op"
 export tasktop="/home/linolium/work/tasktop"
+alias pa="cd ~pa"
 export pa="/home/linolium/work/websites/Peace Arch Soccer"
+alias paw="cd ~paw"
 export paw="/home/linolium/work/websites/Peace Arch Soccer/pasoccer"
+alias ish="cd ~ish"
 export ish="/home/linolium/work/websites/Ishtar"
+alias ishw="cd ~ishw"
+export ishw="/mnt/ishtar"
+alias micd="cd ~micd"
+alias micdw="cd ~micdw"
+export micd="/home/linolium/work/websites/Math I Can Do"
+export micdw="/home/linolium/work/websites/Math I Can Do/micd"
 export in="/mnt/storage/incoming"
 
 # ssh aliases
-alias galiano="ssh m1n6@galiano.ugrad.cs.ubc.ca"
-alias lulu="ssh m1n6@lulu.ugrad.cs.ubc.ca"
-alias server="ssh -p443 linolium@$SERVER"
-alias ginko="ssh linolium@$DESKTOP"
-alias jimmy="ssh linolium@$LAPTOP"
+alias galiano="ssh galiano"
+alias lulu="ssh lulu"
+alias plebb="ssh $SERVER"
+alias ginko="ssh $DESKTOP"
+alias jimmy="ssh $LAPTOP"
 #alias ftpproxy="sudo ssh -D 21 jkweb.ca"
 
 # bind (F1, F2, F3) to ssh (server, desktop, laptop)
-bindkey -s '\e[11~' 'server\n'
+bindkey -s '\e[11~' 'plebb\n'
 bindkey -s '\e[12~' 'ginko\n'
 bindkey -s '\e[13~' 'jimmy\n'
 
@@ -106,15 +163,12 @@ setopt nohup
 compinit
 promptinit
 
+bindkey "^B" push-line
+
 # custom prompt
 #prompt fire
-PROMPT="$(print '%{\e[0;31m%}.:%{\e[1;30m%}%B[%m:%{\e[1;34m%}%~%{\e[1;30m%}]%b%{\e[0;31m%}:.%{\e[0m%}') "
-RPROMPT="$(print '%{\e[1;30m%}%B[%{\e[1;34m%}%*%{\e[1;30m%}]%b%{\e[0m%}')"
-
-
-# system environment variables
-export EDITOR="vim"
-export BROWSER="firefox"
+#PROMPT="$(print '%{\e[1;30m%}[%{\e[1;30m%}%B%m:%{\e[1;34m%}%~%{\e[1;30m%}')$(print '%b%{\e[1;30m%}]%{\e[0m%}') "
+#RPROMPT="$(print '%{\e[1;30m%}%{\e[1;30m%}%B[%{\e[1;34m%}%*%{\e[1;30m%}]%b%{\e[0m%}')"
 
 # get special keys working
 bindkey "\e[1~" beginning-of-line
@@ -144,3 +198,26 @@ zstyle ':completion:*:kill:*' force-list always
 
 # cd not select parent dir
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+# auto extensions
+alias -s html=$BROWSER
+alias -s doc=word
+alias -s xls=word
+alias -s txt=$EDITOR
+alias -s php=$EDITOR
+alias -s rb=$EDITOR
+alias -s java=$EDITOR
+alias -s PKGBUILD=$EDITOR
+alias -s tar.gz='tar xfvz'
+alias -s tar.bz2='tar xfvj'
+alias -s png=feh
+alias -s jpg=feh
+alias -s jpeg=feh
+alias -s gif=feh
+alias -s pdf=evince
+
+alias -g GV='| grep -v '
+alias -g G='| grep '
+alias -g C='| wc -l '
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"

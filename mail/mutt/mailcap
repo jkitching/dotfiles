@@ -1,0 +1,6 @@
+audio/mpeg; { set -m \; /bin/mv -T %s %s.mv \; ( urxvt -e mplayer %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a 
+application/pdf; { set -m \; /bin/mv -T %s %s.mv \; ( evince %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a 
+image/jpeg; { set -m \; /bin/mv -T %s %s.mv \; ( firefox %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a 
+application/msword; /home/linolium/.cxoffice/win2000/desktopdata/cxassoc/Scripts/cxoffice-24d953a3-91de-48a9-a71c-744f2e682e7a:application_msword '%s'; \
+    description="Microsoft Office Word"; \
+    test=test -n "$DISPLAY"

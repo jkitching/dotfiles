@@ -1,0 +1,21 @@
+# Roots of the synchronization 
+root = /home/linolium/sync
+root = ssh://linolium@ginko/
+
+# Paths to synchronize
+path = bin
+path = downloads
+path = notes
+path = pics
+path = prog
+path = school
+path = school.old
+path = work
+
+# Some regexps specifying names and paths to ignore
+#ignore = Name .*~
+ignore = Name .metadata
+ignore = Name work/tasktop/workspaces
+ignore = Name .*.swp
+ignore = Name .vim/.netrwhist
+ignore = Name work/websites/Peace Arch Soccer/pasoccer

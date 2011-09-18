@@ -1,0 +1,8 @@
+" vim: set ft=pentadactyl:
+
+loadplugins '\.(js|penta)$'
+group user
+
+" Switch tabs with vim-style keybindings.
+map -modes=n,v <C-l> -builtin <count>:bn<Return>
+map -modes=n,v <C-h> -builtin <count>:bp<Return>
