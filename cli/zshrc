@@ -1,7 +1,7 @@
 ##################################################################
 ## oh-my-zsh
 
-# Path to your oh-my-zsh configuration.
+# Path to your oh-my-zsh configuration
 ZSH=$HOME/.oh-my-zsh
 
 # Theme: random or ~/.oh-my-zsh/themes/*
@@ -16,7 +16,11 @@ COMPLETION_WAITING_DOTS="true"
 # Plugins: ~/.oh-my-zsh/plugins/*
 plugins=(rails git)
 
+# Source the main oh-my-zsh stuff
 source $ZSH/oh-my-zsh.sh
+
+# Modify jnrowe's prompt to include hostname
+PROMPT='${ret_status}%{$fg_bold[green]%}%p %m%{$fg_bold[white]%}:%{$fg_bold[yellow]%}%2~ ${vcs_info_msg_0_}${dir_status}%{$reset_color%} '
 
 ##################################################################
 ## Notes
@@ -80,6 +84,7 @@ alias ff="find . | grep -i"
 alias rc="source ~/.zshrc"
 alias rce="vim ~/.zshrc && rc"
 alias mutt="mutt -F ~/.mutt/rc.personal"
+alias imutt="mutt -F ~/.mutt/rc.personal.imap"
 #rm () { mv $* /tmp/wastebasket }
 zget () {
   file=`basename $1`

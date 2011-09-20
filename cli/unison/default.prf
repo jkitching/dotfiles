@@ -1,6 +1,6 @@
 # Roots of the synchronization 
-root = /home/linolium/sync
-root = ssh://linolium@ginko/
+root = /home/linolium/.sync
+root = ssh://linolium@ginko/.sync
 
 # Paths to synchronize
 path = bin
