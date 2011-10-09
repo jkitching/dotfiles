@@ -21,8 +21,8 @@ XF86ApplicationRight
 #"sudo shutdown -r now"
 #XF86Launch1
 
-"~/dvol -d 5"
-XF86AudioLowerVolume
+#"amixer -D pulse set Master 10%-"
+#XF86AudioLowerVolume
 
-"~/dvol -i 5"
-XF86AudioRaiseVolume
+#"amixer -D pulse set Master 10%+"
+#XF86AudioRaiseVolume

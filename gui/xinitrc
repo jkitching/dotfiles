@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Add custom binaries to path
-export PATH="/home/linolium/sync/bin:/home/linolium/bin:$PATH"
+export PATH="/home/linolium/bin:$PATH"
 
 # Run the GPG agent
 envfile="${HOME}/.gnupg/gpg-agent.env"
@@ -19,7 +19,7 @@ urxvt &
 feh --bg-scale .wallpaper.jpg &
 
 # Cache binaries for dmenu
-find `echo $PATH | sed -e 's@:@ \n@g' | uniq | tr -d '\n'` | sed -e 's@.*/@@' | sort | uniq >| /tmp/linolium-dmenu
+bin-list >| /tmp/linolium-dmenu &
 
 # Set up an icon tray (alignment, size, background, window type)
 if [ $(hostname) == "ginko" ]; then
@@ -32,10 +32,21 @@ elif [ $(hostname) == "jimmy" ]; then
 	  --widthtype pixel --width 20 --height 12 --expand true \
 	  --transparent true --tint 0x000000 --alpha 0 \
 	  --SetDockType true --SetPartialStrut true &
+	#trayer --edge top --align right --margin 0 \
+	#  --widthtype pixel --width 20 --height 12 --expand true \
+	#  --transparent true --tint 0x000000 --alpha 0 \
+	#  --SetDockType true --SetPartialStrut true
 fi
 
 # Required for GTK themes to look nice
-gnome-settings-daemon &
+#gnome-settings-daemon &
+xsettingsd &
+
+# Daemon for adjusting volume
+xfce4-volumed &
+
+# Start MPD daemon
+mpd &
 
 # Unlock the keyring and start the gnome keyring daemon
 eval `gnome-keyring-daemon`

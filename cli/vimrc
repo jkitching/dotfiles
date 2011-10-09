@@ -14,6 +14,8 @@ set number
 syntax on
 colorscheme ron
 set t_Co=8 " disable 256-color support
+set colorcolumn=79
+"highlight ColorColumn ctermbg=lightgrey guibg=lightgray
 
 " show spacing visually
 set list listchars=tab:»·,trail:·,extends:$,nbsp:=
@@ -40,6 +42,9 @@ au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | silent !ch
 " search for Google contacts
 imap <C-F> <ESC>:r!google-contacts-lookup <cword><CR><ESC>
 
+" thesaurus searching
+set thesaurus+=~/.vim/mthesaur.txt
+
 " set tab width in spaces
 command! -nargs=1 Tab call s:SetTabs('<args>')
 function s:SetTabs(width)
@@ -48,6 +53,9 @@ function s:SetTabs(width)
   exec "set softtabstop=" . a:width
   exec "set expandtab"
 endfunction
+
+" allow toggling of insert-paste mode
+set pastetoggle=<F2>
 
 " -------- Prolog --------------------------------------------------------
 
@@ -104,6 +112,10 @@ let g:Tex_CompileRule_pdf = 'dvipdf $*.dvi'
 "let g:Tex_CompileRule_pdf = 'pdflatex --interaction=nonstopmode $*'
 "let g:Tex_CompileRule_pdf = 'ps2pdf $*.ps'
 
+" -------- VimOutliner --------------------------------------------------
+
+au! BufRead,BufNewFile *.otl set filetype=vo_base nolist
+
 " -------- ctags/taglist ------------------------------------------------
 
 " don't show variables for php!
@@ -152,6 +164,9 @@ endfunction
 
 " -------- Vundle packages ----------------------------------------------
 
+" to install:
+" git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+" cd ~/.vim/bundle/vundle && git checkout -b v origin/v
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
@@ -159,6 +174,9 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-fugitive'
 Bundle 'SudoEdit.vim'
+"Bundle 'vimoutliner/vimoutliner'
+" fromcolor-fix branch:
+Bundle 'tlvince/vimoutliner', {'v': 'c8904c8f9b'}
 
 " W writes with sudo privileges
 command W SudoWrite

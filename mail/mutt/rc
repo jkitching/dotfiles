@@ -46,7 +46,7 @@ auto_view text/html
 alternative_order text/plain text/html
 set sleep_time=0 # don't pause on informational messages
 set wait_key=no # don't ask for a key after a shell command
-set auto_tag=yes # require "tag-prefix" (;) typed for group operations
+set auto_tag=no # require "tag-prefix" (;) typed for group operations
 set pager_stop # don't fall thorugh to the next message in the pager
 set folder_format="%2C %t %N %8s %d %f"
 
@@ -67,6 +67,7 @@ bind generic,attach,alias,pager,pgp,postpone,index,compose,browser i exit
 macro index,pager G "<pipe-message>cat | viewhtmlmsg &<enter>"
 macro index,generic,pager <F11> "<shell-escape>ssh linolium@jkweb.ca getmail<enter>"
 macro index,generic,pager <F12> "<shell-escape>offlineimap2stage<enter>"
+#macro index,generic,pager <F12> "<shell-escape>getmail<enter>"
 macro index,pager,attach   \Cb     ":set pipe_decode\n|urlview\n:unset pipe_decode\n" 
 
 macro index,pager c "<change-folder>" "open a different folder"
@@ -77,6 +78,7 @@ macro compose A "<attach-message>" "attach message(s) to this message"
 # Delete is re-bound to move messages to Trash.
 # They will be filed as ham by a cron script later.
 macro index,pager d "s=Trash\n" "move message to trash"
+macro index,pager D "<delete-message>" "delete this message permanently"
 
 # Spam that SA missed is manually sent to the junkmail folder
 macro index,pager X "s=Junk\n" "file as Spam"

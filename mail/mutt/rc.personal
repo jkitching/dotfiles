@@ -99,6 +99,11 @@ set edit_headers=yes
 #####################################################################
 
 send-hook "~t @reply\.facebook\.com" "my_hdr From: jkitching@mailbolt.com"
+save-hook "~t sprouts-volunteers@googlegroups\.com$" =University.Sprouts
+save-hook "~f ubc\.ca$" =University
+save-hook "~f thecube\.ca$" =University
+save-hook "~f piazza\.com$" =University
+save-hook "~t ^pride-ubc-announce@googlegroups\.com$" "=University.Pride UBC"
 
 #####################################################################
 # keystroke/gui customization

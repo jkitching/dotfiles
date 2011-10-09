@@ -14,13 +14,20 @@ DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
 
 # Plugins: ~/.oh-my-zsh/plugins/*
-plugins=(rails git)
+plugins=(rails git vi-mode)
+
+# Tweak vi-mode
+# :nmap <Space> i
+#bindkey -M vicmd ' ' vi-insert
 
 # Source the main oh-my-zsh stuff
 source $ZSH/oh-my-zsh.sh
 
 # Modify jnrowe's prompt to include hostname
 PROMPT='${ret_status}%{$fg_bold[green]%}%p %m%{$fg_bold[white]%}:%{$fg_bold[yellow]%}%2~ ${vcs_info_msg_0_}${dir_status}%{$reset_color%} '
+
+# Disable correction prompts
+unsetopt correctall
 
 ##################################################################
 ## Notes
@@ -58,12 +65,13 @@ alias grep="grep --color"
 alias root="sudo su -"
 alias reboot="sudo shutdown -r now"
 alias poweroff="sudo shutdown -h now"
-alias flog="sudo tail -f `ls -t /var/log/messages* | head -1`"
+alias flog='sudo tail -f `ls -t /var/log/messages* | head -1`'
+alias vlog='sudo vim `ls -t /var/log/messages* | head -1`'
 alias sync="unison -logfile ~/.unison.log"
 alias synergy="killall synergyc 2>/dev/null; nohup synergyc -1 ginko >/dev/null 2>/dev/null"
 alias vnc="rx11vnc -fs -l linolium $DESKTOP"
 alias kb="setxkbmap -rules xorg -model logic -layout 'us,th' -option 'grp:alt_shift_toggle'; xmodmap ~/.xmodmap; xset r rate 220 27"
-alias binupdate="compgen -c > /tmp/linolium-dmenu"
+alias binupdate="bin-list >| /tmp/linolium-dmenu"
 alias preview="feh -F -Z -d"
 alias umount="fusermount -u"
 alias pacman="pacman-color"
@@ -71,7 +79,7 @@ alias yaourt="yaourt --noconfirm"
 alias mplayer="mplayer -softvol -softvol-max 1000"
 alias cdmv="renamealbum --dest /mnt/storage/incoming/albums"
 alias usblp="sudo modprobe usblp && sleep 3 && sudo rmmod usblp"
-alias rtl="sudo rmmod r8192se_pci && sleep 1 && sudo modprobe r8192se_pci"
+alias rtl="sudo rmmod rtl8192se && sleep 1 && sudo modprobe rtl8192se"
 alias alsamixer="alsamixer -c 0"
 alias emacs="emacs -nw"
 alias k9="kill -9"
@@ -83,44 +91,44 @@ alias pko="pk9 offlineimap"
 alias ff="find . | grep -i"
 alias rc="source ~/.zshrc"
 alias rce="vim ~/.zshrc && rc"
+alias vimrc="vim ~/.vimrc"
 alias mutt="mutt -F ~/.mutt/rc.personal"
 alias imutt="mutt -F ~/.mutt/rc.personal.imap"
+alias erl="rlwrap erl"
 #rm () { mv $* /tmp/wastebasket }
 zget () {
   file=`basename $1`
-  ext=`echo $file | awk -F. '{print $(NF-1) "." $NF}'`
-  if [[ $ext = 'tar.gz' ]]; then
+  ext2=`echo $file | awk -F. '{print $(NF-1) "." $NF}'`
+  ext1=`echo $file | awk -F. '{print $NF}'`
+  if [[ $ext2 = 'tar.gz' ]]; then
     curl $1 | tar xfvz -
-  elif [[ $ext = 'tar.bz2' ]]; then
+  elif [[ $ext2 = 'tar.bz2' ]]; then
     curl $1 | tar xfvj -
+  elif [[ $ext1 = 'zip' ]]; then
+    curl $1 > /tmp/unzip-$file
+    unzip /tmp/unzip-$file -d `basename $file .$ext1`
+    rm /tmp/unzip-$file
   else
     echo "unknown extension: $file"
   fi
 }
 
 # quick folders
-alias 221="cd ~/school/cs221ta"
-alias 322="cd ~/school/cs322"
-alias 411="cd ~/school/cs411"
-export cs221="/home/linolium/school.old/cs221ta"
-export cs322="/home/linolium/school.old/cs322"
-export cs411="/home/linolium/school.old/cs411"
-export math="/home/linolium/school.old/math342"
-export chin="/home/linolium/school.old/chinese"
-export coop="/home/linolium/school.old/co-op"
-export tasktop="/home/linolium/work/tasktop"
-alias pa="cd ~pa"
-export pa="/home/linolium/work/websites/Peace Arch Soccer"
-alias paw="cd ~paw"
-export paw="/home/linolium/work/websites/Peace Arch Soccer/pasoccer"
-alias ish="cd ~ish"
-export ish="/home/linolium/work/websites/Ishtar"
-alias ishw="cd ~ishw"
+export cs448b="$HOME/school/cs448b"
+alias 448="cd ~cs448b"
+export cs317="$HOME/school/cs317"
+alias 317="cd ~cs317"
+export film="$HOME/school/asia365"
+alias film="cd $film"
+export chin="$HOME/school/chinese"
+export coop="$HOME/school/co-op"
+export tasktop="$HOME/work/tasktop"
+export pa="$HOME/work/websites/Peace Arch Soccer"
+export paw="$HOME/work/websites/Peace Arch Soccer/pasoccer"
+export ish="$HOME/work/websites/Ishtar"
 export ishw="/mnt/ishtar"
-alias micd="cd ~micd"
-alias micdw="cd ~micdw"
-export micd="/home/linolium/work/websites/Math I Can Do"
-export micdw="/home/linolium/work/websites/Math I Can Do/micd"
+export micd="$HOME/work/websites/Math I Can Do"
+export micdw="$HOME/work/websites/Math I Can Do/micd"
 export in="/mnt/storage/incoming"
 
 # ssh aliases
@@ -209,8 +217,8 @@ alias -s html=$BROWSER
 alias -s doc=word
 alias -s xls=word
 alias -s txt=$EDITOR
-alias -s php=$EDITOR
-alias -s rb=$EDITOR
+#alias -s php=$EDITOR
+#alias -s rb=$EDITOR
 alias -s java=$EDITOR
 alias -s PKGBUILD=$EDITOR
 alias -s tar.gz='tar xfvz'

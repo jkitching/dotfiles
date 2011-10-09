@@ -11,12 +11,13 @@ Config { font = "-*-profont-medium-r-normal-*-12-*-*-*-*-*-*-*"
                     , Run Memory ["-t","Mem: <used>/<total> MB (<usedratio>%)"] 10
                     , Run Swap [] 10
                     , Run Com "battstate.pl" [] "battery" 20
-                    , Run Com "mpc current | sed -e 's@Ginko Biloba FM: @@' | cut -c 1-35" [] "mpd" 5 
+                    -- , Run Com "mpc current | sed -e 's@Ginko Biloba FM: @@' | cut -c 1-35" [] "mpd" 5
+                    , Run Com "volstate.sh" [] "volume" 2
                     , Run Date "%a %b %_d %H:%M" "date" 30
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
        -- , template = "%StdinReader% }{ <fc=#444444>[</fc><fc=#ee9a00>playing:</fc> %mpd%<fc=#444444>]</fc>  <fc=#444444>[</fc>%cpu% <fc=#444444>*</fc> %cpufreq%<fc=#444444>]</fc>  <fc=#444444>[</fc>%memory%<fc=#444444>]</fc>  <fc=#444444>[</fc>Batt: %battery%<fc=#444444>]</fc>  <fc=#ee9a00>%date%</fc> <fc=#444444>|</fc> %CYVR%"
-       , template = "%StdinReader% }{ <fc=#444444>[</fc>%cpu% <fc=#444444>*</fc> %cpufreq% <fc=#444444>*</fc> %coretemp%<fc=#444444>]</fc>  <fc=#444444>[</fc>%memory%<fc=#444444>]</fc>  <fc=#444444>[</fc>Batt: %battery%<fc=#444444>]</fc>  <fc=#ee9a00>%date%</fc> <fc=#444444>|</fc> %CYVR%"
+       , template = "%StdinReader% }{ <fc=#444444>[</fc>%cpu% <fc=#444444>*</fc> %cpufreq% <fc=#444444>*</fc> %coretemp%<fc=#444444>]</fc>  <fc=#444444>[</fc>%memory%<fc=#444444>]</fc>  <fc=#444444>[</fc>Batt: %battery%<fc=#444444>]</fc>  <fc=#ee9a00>%date%</fc>  <fc=#444444>|</fc> Vol: %volume% <fc=#444444>|</fc> %CYVR%"
        }

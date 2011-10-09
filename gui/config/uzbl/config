@@ -285,8 +285,8 @@ set ebind     = @mode_bind global,-insert
 
 # Use socat to directly inject commands into uzbl-core and view events
 # raised by uzbl-core:
-@cbind  <Ctrl><Alt>t  = sh 'xterm -e "socat unix-connect:\"$UZBL_SOCKET\" -"'
-#@cbind  <Ctrl><Alt>t  = sh 'urxvt -e socat unix-connect:"$UZBL_SOCKET" -'
+@cbind  <Ctrl><Mod1>t  = sh 'xterm -e "socat unix-connect:\"$UZBL_SOCKET\" -"'
+#@cbind  <Ctrl><Mod1>t  = sh 'urxvt -e socat unix-connect:"$UZBL_SOCKET" -'
 
 # Uri opening prompts
 @cbind  o<uri:>_       = uri %s
@@ -381,6 +381,7 @@ set stack    = @mode_config stack
 @insert   forward_keys        = 1
 @insert   keycmd_events       = 0
 @insert   modcmd_updates      = 0
+@insert   show_status         = 0
 
 # Multi-stage-binding mode config.
 @stack    keycmd_style        = foreground="red"
@@ -421,4 +422,5 @@ set uri = http://www.google.ca/
 @on_event   LOAD_COMMIT    spawn @config_home/uzbl/scripts/userscript.sh
 
 # Remove statusbar.
-toggle_status
+#toggle_status
+#set show_status = 0
