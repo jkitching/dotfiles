@@ -95,6 +95,7 @@ alias vimrc="vim ~/.vimrc"
 alias mutt="mutt -F ~/.mutt/rc.personal"
 alias imutt="mutt -F ~/.mutt/rc.personal.imap"
 alias erl="rlwrap erl"
+alias rmr="rm -fr"
 #rm () { mv $* /tmp/wastebasket }
 zget () {
   file=`basename $1`
@@ -130,6 +131,7 @@ export ishw="/mnt/ishtar"
 export micd="$HOME/work/websites/Math I Can Do"
 export micdw="$HOME/work/websites/Math I Can Do/micd"
 export in="/mnt/storage/incoming"
+export amazon="$HOME/work/amazon"
 
 # ssh aliases
 alias galiano="ssh galiano"
