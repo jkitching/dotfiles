@@ -5,3 +5,4 @@ application/vnd.openxmlformats-officedocument.wordprocessingml.document; { set -
 application/msword; /home/linolium/.cxoffice/win2000/desktopdata/cxassoc/Scripts/cxoffice-24d953a3-91de-48a9-a71c-744f2e682e7a:application_msword '%s'; \
     description="Microsoft Office Word"; \
     test=test -n "$DISPLAY"
+application/vnd.ms-excel; { set -m \; /bin/mv -T %s %s.mv \; ( localc %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a 
