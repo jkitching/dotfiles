@@ -175,7 +175,7 @@ Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-fugitive'
 Bundle 'SudoEdit.vim'
 "Bundle 'vimoutliner/vimoutliner'
-" fromcolor-fix branch:
+" from color-fix branch:
 Bundle 'tlvince/vimoutliner', {'v': 'c8904c8f9b'}
 
 " W writes with sudo privileges
