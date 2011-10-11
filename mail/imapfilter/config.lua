@@ -23,6 +23,13 @@ print('Moving Facebook messages from ' .. source .. ' to ' .. dest)
 msgs = jkweb[source]:match_from('@facebookmail.com')
 jkweb[source]:move_messages(jkweb[dest], msgs)
 
+-- Move all pride-ubc-announce messages
+dest = 'Mailing Lists.Pride UBC'
+print('Moving pride-ubc-announce messages from ' .. source .. ' to ' .. dest)
+msgs = jkweb[source]:match_to('pride-ubc-announce@googlegroupse.com')
+jkweb[source]:mark_seen(msgs)
+jkweb[source]:move_messages(jkweb[dest], msgs)
+
 -- Move all Seaside-dev messages
 dest = 'Mailing Lists.Seaside-dev'
 print('Moving Seaside-dev messages from ' .. source .. ' to ' .. dest)
