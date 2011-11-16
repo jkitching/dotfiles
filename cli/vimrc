@@ -89,9 +89,9 @@ set tags+=$HOME/.vim/tags/python.ctags
 autocmd BufReadPost *.php,*.module,*.install,*.theme,*.test set syntax=php filetype=php
 autocmd BufReadPost *.php,*.module,*.install,*.theme,*.test Tab 2
 
-" -------- Python -------------------------------------------------------
+" -------- Ruby -------------------------------------------------------
 
-autocmd BufReadPost *.rb,*.erb Tab 2
+autocmd BufReadPost *.rb,*.erb,Rakefile Tab 2
 
 " -------- Erlang -------------------------------------------------------
 
