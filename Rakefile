@@ -8,18 +8,22 @@ task :install do
   dotfiles = Dir['*/**/*'].map {|file| Dotfile.new file}
   dotfiles.each do |file|
     next if File.stat(file.src).directory?
-    filetype = begin File.ftype file.dest rescue 'nonexistent' end
+    file_exists = File.exist?(file.dest)
+    file_type = begin File.ftype file.dest rescue 'nonexistent' end
 
-    # The file is either a regular file or a valid symbolic link.
-    if File.exist?(file.dest) && ['file', 'link'].include?(filetype)
-      if File.realpath(file.src) == File.realpath(file.dest)
+    # The file is either a regular file or a symbolic link.
+    if ['file', 'link'].include?(file_type)
+      if file_exists && File.realpath(file.src) == File.realpath(file.dest)
         puts "symbolic link already exists on #{file.pretty_dest}"
-      elsif file.identical?
+      elsif file_exists && file.identical?
         puts "identical #{file.pretty_dest}"
       elsif replace_all
         file.replace
       else
-        print "overwrite #{file.pretty_dest}? [ynaq] "
+        # If this is an invalid symbolic link, tell the user.
+        dead_link = !file_exists && 'link' == file_type ?
+          ' (dead symbolic link)' : ''
+        print "overwrite #{file.pretty_dest}#{dead_link}? [ynaq] "
         case $stdin.gets.chomp
         when 'a'
           replace_all = true
@@ -33,10 +37,9 @@ task :install do
         end
       end
 
-    # The file does exist, but is either an invalid symbolic link
-    # or of an unexpected type.
-    elsif filetype != 'nonexistent'
-      puts "unexpected filetype of #{file.pretty_dest}: skipping"
+    # The file is of an unexpected type.
+    elsif file_type != 'nonexistent'
+      puts "unexpected file_type of #{file.pretty_dest}: skipping"
 
     # The file does not exist.
     else
