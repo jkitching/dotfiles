@@ -1,32 +1,26 @@
-# Commands to control local music
-"mpc toggle"
+# Commands to control ginko music
+"<%= hostname != 'ginko' ? 'ssh ginko ' : '' %>mpc toggle"
   XF86AudioPlay
-"mpc stop"
+"<%= hostname != 'ginko' ? 'ssh ginko ' : '' %>mpc stop"
   XF86AudioStop
-"mpc prev"
+"<%= hostname != 'ginko' ? 'ssh ginko ' : '' %>mpc prev"
   XF86AudioPrev
-"mpc next"
+"<%= hostname != 'ginko' ? 'ssh ginko ' : '' %>mpc next"
   XF86AudioNext
-"bin/pa_vol_down 5"
+"<%= hostname != 'ginko' ? 'ssh ginko ' : '' %>bin/pa_vol_down 5"
   XF86ApplicationLeft
-"bin/pa_vol_up 5"
+"<%= hostname != 'ginko' ? 'ssh ginko ' : '' %>bin/pa_vol_up 5"
   XF86ApplicationRight
 
-# Commands to control <%=
-other_host = (hostname == 'ginko') ? 'jimmy' : 'ginko' # default to ginko
-%> music
-"ssh <%= other_host %> mpc toggle"
+# Commands to control jimmy music
+"<%= hostname != 'jimmy' ? 'ssh jimmy ' : '' %> mpc toggle"
   Control + XF86AudioPlay
-"ssh <%= other_host %> mpc stop"
+"<%= hostname != 'jimmy' ? 'ssh jimmy ' : '' %>mpc stop"
   Control + XF86AudioStop
-"ssh <%= other_host %> mpc prev"
+"<%= hostname != 'jimmy' ? 'ssh jimmy ' : '' %>mpc prev"
   Control + XF86AudioPrev
-"ssh <%= other_host %> mpc next"
+"<%= hostname != 'jimmy' ? 'ssh jimmy ' : '' %>mpc next"
   Control + XF86AudioNext
-"ssh <%= other_host %> bin/pa_vol_down 5"
-  Control + XF86ApplicationLeft
-"ssh <%= other_host %> bin/pa_vol_up 5"
-  Control + XF86ApplicationRight
 
 # Logitech keyboard
 "mpc prev"
