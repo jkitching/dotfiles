@@ -7,16 +7,14 @@ task :install do
   # category/dirname/filename
   dotfiles = Dir['*/**/*'].map {|file| Dotfile.new file}
   dotfiles.each do |file|
-    if File.stat(file.src).directory?
-      next
-    end
+    next if File.stat(file.src).directory?
     filetype = begin File.ftype file.dest rescue 'nonexistent' end
 
     # The file is either a regular file or a valid symbolic link.
     if File.exist?(file.dest) && ['file', 'link'].include?(filetype)
       if File.realpath(file.src) == File.realpath(file.dest)
         puts "symbolic link already exists on #{file.pretty_dest}"
-      elsif File.identical? file.src, file.dest
+      elsif file.identical?
         puts "identical #{file.pretty_dest}"
       elsif replace_all
         file.replace
@@ -60,8 +58,18 @@ class Dotfile
     @dest_dir = File.dirname @dest
   end
 
+  def identical?
+    File.identical?(@src, @dest) ||
+      erb? && erb_result == File.read(@dest)
+  end
+
   def erb?
     @src =~ /\.erb$/
+  end
+
+  def erb_result
+    hostname = `hostname`.chop
+    @erb_result ||= ERB.new(File.read(@src)).result(binding)
   end
 
   def replace
@@ -76,8 +84,7 @@ class Dotfile
     if erb?
       puts "generating #{pretty_dest}"
       File.open(dest, 'w') do |new_file|
-        hostname = `hostname`.chop
-        new_file.write ERB.new(File.read(@src)).result(binding)
+        new_file.write erb_result
       end
     else
       puts "linking #{pretty_dest}"
