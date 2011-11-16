@@ -23,19 +23,9 @@ bin-list >| /tmp/linolium-dmenu &
 
 # Set up an icon tray (alignment, size, background, window type)
 if [ $(hostname) == "ginko" ]; then
-	trayer --edge top --align left --margin 1884 \
-	  --widthtype pixel --width 35 --height 12 --expand true \
-	  --transparent true --tint 0x000000 --alpha 0 \
-	  --SetDockType true --SetPartialStrut true &
+	trayerargs --align left --margin 1884
 elif [ $(hostname) == "jimmy" ]; then
-	trayer --edge top --align left --margin 1419 \
-	  --widthtype pixel --width 20 --height 12 --expand true \
-	  --transparent true --tint 0x000000 --alpha 0 \
-	  --SetDockType true --SetPartialStrut true &
-	#trayer --edge top --align right --margin 0 \
-	#  --widthtype pixel --width 20 --height 12 --expand true \
-	#  --transparent true --tint 0x000000 --alpha 0 \
-	#  --SetDockType true --SetPartialStrut true
+	trayerargs --align left --margin 1419
 fi
 
 # Required for GTK themes to look nice
@@ -43,6 +33,7 @@ fi
 xsettingsd &
 
 # Daemon for adjusting volume
+# xfconf-query -c xfce4-mixer -p /active-track --create -t string -s "Master"
 xfce4-volumed &
 
 # Start MPD daemon
@@ -87,10 +78,16 @@ nm-applet &
 xsetroot -cursor_name left_ptr
 
 # Start SCIM for Chinese input
-export XMODIFIERS=@im=SCIM
-export GTK_IM_MODULE="scim"
-export QT_IM_MODULE="scim"
-scim -d
+#export XMODIFIERS=@im=SCIM
+#export GTK_IM_MODULE="scim"
+#export QT_IM_MODULE="scim"
+#scim -d
+
+# Start IBus for Chinese input
+export XMODIFIERS=@im=ibus
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+ibus-daemon -d -x --xim
 
 # Window manager
 #exec ck-launch-session xmonad
