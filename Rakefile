@@ -10,7 +10,10 @@ task :install do
     if File.stat(file.src).directory?
       next
     end
-    if File.exist? file.dest
+    filetype = begin File.ftype file.dest rescue 'nonexistent' end
+
+    # The file is either a regular file or a valid symbolic link.
+    if File.exist?(file.dest) && ['file', 'link'].include?(filetype)
       if File.realpath(file.src) == File.realpath(file.dest)
         puts "symbolic link already exists on #{file.pretty_dest}"
       elsif File.identical? file.src, file.dest
@@ -31,6 +34,13 @@ task :install do
           puts "skipping #{file.pretty_dest}"
         end
       end
+
+    # The file does exist, but is either an invalid symbolic link
+    # or of an unexpected type.
+    elsif filetype != 'nonexistent'
+      puts "unexpected filetype of #{file.pretty_dest}: skipping"
+
+    # The file does not exist.
     else
       file.link
     end
@@ -65,9 +75,9 @@ class Dotfile
     end
     if erb?
       puts "generating #{pretty_dest}"
-      File.open(dest) do |new_file|
+      File.open(dest, 'w') do |new_file|
         hostname = `hostname`.chop
-        new_file.write ERB.new(File.read(file)).result(binding)
+        new_file.write ERB.new(File.read(@src)).result(binding)
       end
     else
       puts "linking #{pretty_dest}"
