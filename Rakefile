@@ -66,6 +66,7 @@ class Dotfile
     if erb?
       puts "generating #{pretty_dest}"
       File.open(dest) do |new_file|
+        hostname = `hostname`.chop
         new_file.write ERB.new(File.read(file)).result(binding)
       end
     else
