@@ -23,9 +23,18 @@
 == Template files
 
 One may use ERB template files for cases when different machines should have
-different copies of a config file.  The current hostname is bound by default,
-and access to all other bindings is available as well (including ENV).  For
-example:
+different copies of a config file.  Simply name the file ".erb" and it will
+be template-ized and copied instead of symlinked.
+
+The current hostname is bound by default, and access to all other bindings is
+available as well (including ENV).  For example:
 
   <% other_host = (hostname == 'ginko') ? 'jimmy' : 'ginko' # execute code
   <%= hostname %>                                           # print binding
+
+== Todo
+
+Perhaps there are more config files to factor out in these directories:
+
+  drwx------ 24 linolium linolium 4.0K Aug  8 19:39 .config
+  drwx------  3 linolium linolium 4.0K Dec 20  2009 .local
