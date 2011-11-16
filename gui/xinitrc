@@ -64,7 +64,7 @@ fi
 xset r rate 220 27 &
 
 # Special key bindings
-#xbindkeys &
+xbindkeys &
 
 ## Horizontal and vertical scrolling with trackpoint
 xinput set-int-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 8 1
