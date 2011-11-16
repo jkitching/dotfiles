@@ -10,12 +10,20 @@ Host jimmy
 HostName jimmy
 User linolium
 
+Host kindle
+HostName 192.168.0.115
+User root
+
 Host lulu
 HostName lulu.ugrad.cs.ubc.ca
 User m1n6
 
 Host galiano
 HostName galiano.ugrad.cs.ubc.ca
+User m1n6
+
+Host gambier
+HostName gambier.ugrad.cs.ubc.ca
 User m1n6
 
 Host cs221
