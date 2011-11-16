@@ -29,6 +29,9 @@ PROMPT='${ret_status}%{$fg_bold[green]%}%p %m%{$fg_bold[white]%}:%{$fg_bold[yell
 # Disable correction prompts
 unsetopt correctall
 
+# Disable history sharing
+unsetopt share_history
+
 ##################################################################
 ## Notes
 ##
