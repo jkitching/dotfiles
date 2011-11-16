@@ -1,0 +1,51 @@
+# Commands to control local music
+"mpc toggle"
+  XF86AudioPlay
+"mpc stop"
+  XF86AudioStop
+"mpc prev"
+  XF86AudioPrev
+"mpc next"
+  XF86AudioNext
+"bin/pa_vol_down 5"
+  XF86ApplicationLeft
+"bin/pa_vol_up 5"
+  XF86ApplicationRight
+
+# Commands to control <%=
+other_host = (hostname == 'ginko') ? 'jimmy' : 'ginko' # default to ginko
+%> music
+"ssh <%= other_host %> mpc toggle"
+  Control + XF86AudioPlay
+"ssh <%= other_host %> mpc stop"
+  Control + XF86AudioStop
+"ssh <%= other_host %> mpc prev"
+  Control + XF86AudioPrev
+"ssh <%= other_host %> mpc next"
+  Control + XF86AudioNext
+"ssh <%= other_host %> bin/pa_vol_down 5"
+  Control + XF86ApplicationLeft
+"ssh <%= other_host %> bin/pa_vol_up 5"
+  Control + XF86ApplicationRight
+
+# Logitech keyboard
+"mpc prev"
+  XF86WWW
+"mpc toggle"
+  XF86Mail
+"mpc next"
+  XF86Search
+
+# Seeking with mpd
+#"mpc seek -::5"
+#"mpc seek +::5"
+
+# ThinkVantage button
+#"sudo shutdown -r now"
+#XF86Launch1
+
+# Old way of raising/lowering volume
+#"amixer -D pulse set Master 10%-"
+#XF86AudioLowerVolume
+#"amixer -D pulse set Master 10%+"
+#XF86AudioRaiseVolume
