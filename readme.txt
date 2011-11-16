@@ -12,3 +12,6 @@ vim # and run :BundleInstall
 zget http://www.gutenberg.org/dirs/etext02/mthes10.zip
 mkdir ~/.vim && mv mthes10/mthesaur.txt ~/.vim
 rm -fr mthes10
+
+# rvm
+bash < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
