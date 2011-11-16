@@ -54,6 +54,7 @@ export PATH="/opt/android-sdk/platform-tools:$PATH"
 # system environment variables
 export EDITOR="vim"
 export BROWSER="firefox"
+export MAILDIR=`echo ~/.maildir(:a)`
 
 # listing aliases
 alias ls='ls --color=auto'
@@ -77,6 +78,7 @@ alias umount="fusermount -u"
 alias pacman="pacman-color"
 alias yaourt="yaourt --noconfirm"
 alias mplayer="mplayer -softvol -softvol-max 1000"
+alias mplayerpitch="mplayer -softvol -softvol-max 1000 -af scaletempo"
 alias cdmv="renamealbum --dest /mnt/storage/incoming/albums"
 alias usblp="sudo modprobe usblp && sleep 3 && sudo rmmod usblp"
 alias rtl="sudo rmmod rtl8192se && sleep 1 && sudo modprobe rtl8192se"
@@ -96,6 +98,12 @@ alias mutt="mutt -F ~/.mutt/rc.personal"
 alias imutt="mutt -F ~/.mutt/rc.personal.imap"
 alias erl="rlwrap erl"
 alias rmr="rm -fr"
+alias mus="ncmpcpp"
+alias rmus="ssh ginko -tC ncmpcpp"
+alias todo="emacs ~/notes/org/todo.org"
+alias kindlegen="ssh kindle dbus-send --system /default com.lab126.powerd.resuming int32:1"
+start () { sudo /etc/init.d/"$1" start }
+stop () { sudo /etc/init.d/"$1" stop }
 #rm () { mv $* /tmp/wastebasket }
 zget () {
   file=`basename $1`
@@ -113,6 +121,10 @@ zget () {
     echo "unknown extension: $file"
   fi
 }
+
+# rails and git aliases
+alias rmig="rake db:migrate"
+alias rch="rails generate migration"
 
 # quick folders
 export cs448b="$HOME/school/cs448b"
@@ -136,6 +148,7 @@ export amazon="$HOME/work/amazon"
 # ssh aliases
 alias galiano="ssh galiano"
 alias lulu="ssh lulu"
+alias gambier="ssh gambier"
 alias plebb="ssh $SERVER"
 alias ginko="ssh $DESKTOP"
 alias jimmy="ssh $LAPTOP"
