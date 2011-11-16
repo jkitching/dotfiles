@@ -104,6 +104,8 @@ save-hook "~f ubc\.ca$" =University
 save-hook "~f thecube\.ca$" =University
 save-hook "~f piazza\.com$" =University
 save-hook "~t ^pride-ubc-announce@googlegroups\.com$" "=University.Pride UBC"
+save-hook "~f ^ubcacappella@gmail\.com$" =University
+save-hook "~f ^ubcimprov@gmail\.com$" =University
 
 #####################################################################
 # keystroke/gui customization
