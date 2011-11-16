@@ -93,6 +93,10 @@ autocmd BufReadPost *.php,*.module,*.install,*.theme,*.test Tab 2
 
 autocmd BufReadPost *.rb,*.erb Tab 2
 
+" -------- Erlang -------------------------------------------------------
+
+autocmd BufReadPost *.erl Tab 2
+
 " -------- LaTeX --------------------------------------------------------
 
 " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
