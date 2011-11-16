@@ -16,7 +16,8 @@ task :install do
       if file_exists && File.realpath(file.src) == File.realpath(file.dest)
         puts "symbolic link already exists on #{file.pretty_dest}"
       elsif file_exists && file.identical?
-        puts "identical #{file.pretty_dest}"
+        erb = file.erb? ? ' (templated)' : ''
+        puts "identical#{erb} #{file.pretty_dest}"
       elsif replace_all
         file.replace
       else
