@@ -25,7 +25,7 @@ remotehost = jkweb.ca
 remoteport = 143
 remoteusereval = linolium
 preauthtunnel = ssh -q jkweb.ca /usr/libexec/dovecot/imap
-maxconnections = 5
+maxconnections = 2
 holdconnectionopen = no
 folderfilter = lambda foldername: \
   foldername in ['INBOX', 'INBOX.Facebook', 'Sent']
@@ -36,7 +36,7 @@ ssl = no
 remotehost = jkweb.ca
 remoteport = 143
 remoteusereval = linolium
-preauthtunnel = ssh -q jkweb.ca dovecot --exec-mail imap
+preauthtunnel = ssh -q jkweb.ca /usr/libexec/dovecot/imap
 maxconnections = 5
 holdconnectionopen = no
 folderfilter = lambda foldername: \
