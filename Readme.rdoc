@@ -1,0 +1,31 @@
+= jkitching dotfiles
+
+== Installation
+
+  git clone git://github.com/jkitching/dotfiles ~/.dotfiles
+
+  # oh-my-zsh
+  git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+
+  # vundle
+  git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+  cd ~/.vim/bundle/vundle && git checkout -b v origin/v
+  vim # and run :BundleInstall
+
+  # vim thesaurus
+  zget http://www.gutenberg.org/dirs/etext02/mthes10.zip
+  mkdir ~/.vim && mv mthes10/mthesaur.txt ~/.vim
+  rm -fr mthes10
+
+  # rvm
+  bash < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
+
+== Template files
+
+One may use ERB template files for cases when different machines should have
+different copies of a config file.  The current hostname is bound by default,
+and access to all other bindings is available as well (including ENV).  For
+example:
+
+  <% other_host = (hostname == 'ginko') ? 'jimmy' : 'ginko' # execute code
+  <%= hostname %>                                           # print binding
