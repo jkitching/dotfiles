@@ -1,4 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; General emacs configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/.emacs.d/")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; GUI/terminal
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (xterm-mouse-mode 1)
@@ -64,6 +70,26 @@
 
 ;; Create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/autosaves/" t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Org-mode auto-save
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; revbufs reverts out-of-date buffers (from external changes)
+(require 'revbufs)
+
+; real-auto-save saves the file automatically every n seconds
+(require 'real-auto-save)
+
+(add-hook 'org-load-hook (lambda ()
+  ; revbufs
+  (run-at-time nil 10 #'revbufs)
+
+  ; real-auto-save
+  (add-hook 'text-mode-hook 'turn-on-real-auto-save)
+  (add-hook 'muse-mode-hook 'turn-on-real-auto-save)
+  (setq real-auto-save-interval 10))) ;; in seconds
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Org-mode basic setup
