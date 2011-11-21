@@ -103,7 +103,7 @@ alias erl="rlwrap erl"
 alias rmr="rm -fr"
 alias mus="ncmpcpp"
 alias rmus="ssh ginko -tC ncmpcpp"
-alias todo="emacs ~/notes/org/todo.org"
+alias todo="emacs ~/dropbox/org/todo.org"
 alias kindlegen="ssh kindle dbus-send --system /default com.lab126.powerd.resuming int32:1"
 start () { sudo /etc/init.d/"$1" start }
 stop () { sudo /etc/init.d/"$1" stop }
