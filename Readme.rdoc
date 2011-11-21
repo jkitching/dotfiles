@@ -23,6 +23,20 @@
   # rvm
   bash < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
 
+  # dropbox
+  sudo yaourt -S dropbox dropboxd-userspace
+  sudo sed -ie 's@yourusername@linolium@' /etc/conf.d/dropboxd-userspace.conf
+  sudo vim /etc/rc.conf # add @dropboxd-userspace to DAEMONS
+  sudo /etc/init.d/dropboxd-userspace start
+  # set up to point to .dropdata
+  ln -s .dropdata/Dropbox ~/dropbox
+
+  # org-mode
+  sudo yaourt -S emacs-org-mode mu
+  mu index
+  sudo pacman -S perl-mailtools
+  (crontab -l ; echo "*/5 * * * * mu index") | crontab -
+
 == Template files
 
 One may use ERB template files for cases when different machines should have

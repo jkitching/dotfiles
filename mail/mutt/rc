@@ -63,13 +63,6 @@ set certificate_file=~/.mutt/certificates
 
 bind generic,attach,alias,pager,pgp,postpone,index,compose,browser i exit
 
-# Not sure why this can't be \Cg...
-macro index,pager G "<pipe-message>cat | viewhtmlmsg &<enter>"
-macro index,generic,pager <F11> "<shell-escape>ssh linolium@jkweb.ca getmail<enter>"
-macro index,generic,pager <F12> "<shell-escape>offlineimap2stage<enter>"
-#macro index,generic,pager <F12> "<shell-escape>getmail<enter>"
-macro index,pager,attach   \Cb     ":set pipe_decode\n|urlview\n:unset pipe_decode\n" 
-
 macro index,pager c "<change-folder>" "open a different folder"
 macro index,pager C "<copy-message>" "copy a message to a mailbox"
 macro index,pager M "<save-message>" "move a message to a mailbox"
@@ -81,9 +74,6 @@ macro index,pager d "s=Trash\n" "move message to trash"
 macro index,pager D "<delete-message>" "delete this message permanently"
 macro attach D "<detach-file>" "delete the current entry"
 
-# Spam that SA missed is manually sent to the junkmail folder
-macro index,pager X "s=Junk\n" "file as Spam"
-
 # vim-like bindings for page up and page down
 macro index,pager,generic \cu "<previous-page>"
 macro index,pager,generic \cd "<next-page>"
@@ -91,17 +81,9 @@ macro index,pager,generic \cd "<next-page>"
 # search: overrides the "mark as new message"
 bind pager,index,browser N search-opposite
 
-# mutt-to-org-mode glue
-macro index \eR "|~/bin/capture-mail\n"
-
 # reload configuration
+# TODO: fix this
 macro generic,attach,alias,pager,pgp,postpone,index,compose,browser <F5> ":source ~/.mutt/muttrc<enter>" "reload the .muttrc file..."
-
-# move to folder shortcuts
-macro index,pager ,p "M=Personal\n" "move message to =Personal"
-macro index,pager ,u "M=University\n" "move message to =University"
-macro index,pager ,,p "M=University.Personal\n" "move message to =University.Personal"
-macro index,pager ,a "M=INBOX.Actionable\n" "move message to =INBOX.Actionable"
 
 #####################################################################
 # colours

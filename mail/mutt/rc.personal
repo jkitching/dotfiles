@@ -74,26 +74,6 @@ mailboxes ='WorldSkills'
 #mailboxes ='Other'
 #mailboxes ='Outbox'
 
-# Macros for mailboxes in editor mode.  I found that I didn't end
-# up using them, but including them for the future just in case.
-#macro editor '#in' '=INBOX'
-#macro editor '#fb' '=INBOX.Facebook'
-#macro editor '#soc' '=Jobs.Soccer'
-#macro editor '#per' '=Personal'
-#macro editor '#uni' '=University'
-
-#####################################################################
-# outgoing mail
-#####################################################################
-
-set sendmail="msmtpQ"
-set sendmail_wait=-1
-set use_from=yes
-set realname="Joel Kitching"
-set from=joel@jkweb.ca
-set envelope_from=yes
-set edit_headers=yes
-
 #####################################################################
 # hook customization
 #####################################################################
@@ -117,3 +97,22 @@ save-hook "~f ^hltn@shaw\.ca$" "=Jobs.Math I Can Do"
 macro index,pager 1 "<change-folder>=INBOX<enter>"
 macro index,pager 2 "<change-folder>=INBOX.Facebook<enter>"
 macro index,pager 3 "<change-folder>=INBOX.Actionable<enter>"
+
+# Not sure why this can't be \Cg...
+macro index,pager G "<pipe-message>cat | viewhtmlmsg &<enter>"
+macro index,generic,pager <F11> "<shell-escape>ssh linolium@jkweb.ca getmail<enter>"
+macro index,generic,pager <F12> "<shell-escape>offlineimap2stage<enter>"
+#macro index,generic,pager <F12> "<shell-escape>getmail<enter>"
+macro index,pager,attach   \Cb     ":set pipe_decode\n|urlview\n:unset pipe_decode\n" 
+
+# Spam that SA missed is manually sent to the junkmail folder
+macro index,pager X "s=Junk\n" "file as Spam"
+
+# mutt-to-org-mode glue
+macro index,pager \eR "|~/bin/capture-mail\n"
+
+# move to folder shortcuts
+macro index,pager ,p "M=Personal\n" "move message to =Personal"
+macro index,pager ,u "M=University\n" "move message to =University"
+macro index,pager ,,p "M=University.Personal\n" "move message to =University.Personal"
+macro index,pager ,a "M=INBOX.Actionable\n" "move message to =INBOX.Actionable"
