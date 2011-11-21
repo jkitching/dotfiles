@@ -99,18 +99,19 @@
 
 ; revbufs reverts out-of-date buffers (from external changes)
 (require 'revbufs)
+(run-at-time nil 10 #'revbufs)
 
 ; real-auto-save saves the file automatically every n seconds
-(require 'real-auto-save)
-
-(add-hook 'org-load-hook (lambda ()
-  ; revbufs
-  (run-at-time nil 10 #'revbufs)
-
-  ; real-auto-save
-  (add-hook 'text-mode-hook 'turn-on-real-auto-save)
-  (add-hook 'muse-mode-hook 'turn-on-real-auto-save)
-  (setq real-auto-save-interval 10))) ;; in seconds
+;(require 'real-auto-save)
+;
+;(add-hook 'org-load-hook (lambda ()
+;  ; revbufs
+;  (run-at-time nil 10 #'revbufs)
+;
+;  ; real-auto-save
+;  (add-hook 'text-mode-hook 'turn-on-real-auto-save)
+;  (add-hook 'muse-mode-hook 'turn-on-real-auto-save)
+;  (setq real-auto-save-interval 10) ;)) ;; in seconds
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Org-mode capture-refile-archive settings
@@ -136,7 +137,7 @@
 ;; standard org <-> capture stuff, RTFM
 (setq org-capture-templates ;; mail-specific note template, identified by "m"
   (cons '("m" "Mail" entry (file+headline (concat org-directory "/todo.org") "Capture")
-          "* TODO %?\n  Source: %u, %c\n  %i")
+          "* TODO %?\n  Email: %c\n  %i")
         org-capture-templates))
 
 ;; ensure that emacsclient will show just the note to be edited when invoked
