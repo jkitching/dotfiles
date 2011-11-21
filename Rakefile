@@ -5,6 +5,7 @@ desc "install the dot files into user's home directory"
 task :install do
   replace_all = false
   # category/dirname/filename
+  Dir.chdir(File.dirname(__FILE__))
   dotfiles = Dir['*/**/*'].map {|file| Dotfile.new file}
   dotfiles.each do |file|
     next if File.stat(file.src).directory?
@@ -53,7 +54,7 @@ end
 class Dotfile
   attr_accessor :src, :category, :dest, :pretty_dest, :dest_dir, :short_src
   def initialize file
-    @src = File.join(ENV['PWD'], file)
+    @src = File.realpath(file)
     parts = file.split '/'
     @category = parts.shift
     real_file = '.' + parts.join('/').sub('.erb', '')
