@@ -109,7 +109,7 @@ macro index,pager,attach   \Cb     ":set pipe_decode\n|urlview\n:unset pipe_deco
 macro index,pager X "s=Junk\n" "file as Spam"
 
 # mutt-to-org-mode glue
-macro index,pager \eR "|~/bin/capture-mail\n"
+macro index,pager \er "|~/bin/capture-mail\n"
 
 # move to folder shortcuts
 macro index,pager ,p "M=Personal\n" "move message to =Personal"

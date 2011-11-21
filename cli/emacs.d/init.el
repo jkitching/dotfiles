@@ -55,6 +55,28 @@
  ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Org-mode basic setup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Org-mode stuff
+(require 'org-install)
+(require 'org-capture)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+(setq org-directory "~/dropbox/org")
+(setq org-mobile-inbox-for-pull "~/notes/org/inbox.org")
+(setq org-mobile-directory "~/dropbox/mobileorg")
+
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Autosave
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -66,7 +88,7 @@
   ;; If there is more than one, they won't work right.
  '(auto-save-file-name-transforms (quote ((".*" "~/.emacs.d/autosaves/\\1" t))))
  '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
- '(org-agenda-files (quote ("~/notes/org/todo.org"))))
+ '(org-agenda-files (list (concat org-directory "/todo.org"))))
 
 ;; Create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/autosaves/" t)
@@ -90,36 +112,14 @@
   (add-hook 'muse-mode-hook 'turn-on-real-auto-save)
   (setq real-auto-save-interval 10))) ;; in seconds
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Org-mode basic setup
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; Org-mode stuff
-(require 'org-install)
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
-(setq org-directory "~/notes/org")
-(setq org-mobile-inbox-for-pull "~/notes/org/inbox.org")
-(setq org-mobile-directory "~/dropbox/mobileorg")
-
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Org-mode capture-refile-archive settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq org-default-notes-file (concat org-directory "/capture.org"))
+(setq org-default-notes-file (concat org-directory "/todo.org"))
 (define-key global-map "\C-cc" 'org-capture)
 (setq org-capture-templates
-  '(("t" "Todo" entry (file+headline "~/notes/org/todo.org" "Capture")
+  '(("t" "Todo" entry (file+headline (concat org-directory "/todo.org") "Capture")
      "* TODO %?")))
 
 (setq org-outline-path-complete-in-steps t)
@@ -135,7 +135,7 @@
 
 ;; standard org <-> capture stuff, RTFM
 (setq org-capture-templates ;; mail-specific note template, identified by "m"
-  (cons '("m" "Mail" entry (file+headline "~/notes/org/todo.org" "Capture")
+  (cons '("m" "Mail" entry (file+headline (concat org-directory "/todo.org") "Capture")
           "* TODO %?\n  Source: %u, %c\n  %i")
         org-capture-templates))
 
@@ -144,14 +144,17 @@
 ;; fallback to legacy behavior when not invoked via org-protocol.
 (add-hook 'org-capture-mode-hook 'delete-other-windows)
 (setq my-org-protocol-flag nil)
-(defadvice org-capture-finalize (after delete-frame-at-end activate)
-  "Delete frame at capture finalization"
+(add-hook 'org-capture-after-finalize-hook (lambda ()
   (progn (if my-org-protocol-flag (delete-frame))
-     (setq my-org-protocol-flag nil)))
-(defadvice org-capture-kill (after delete-frame-at-end activate)
-  "Delete frame at capture abort"
-  (progn (if my-org-protocol-flag (delete-frame))
-     (setq my-org-protocol-flag nil)))
+     (setq my-org-protocol-flag nil))))
+;(defadvice org-capture-finalize (after delete-frame-at-end activate)
+;  "Delete frame at capture finalization"
+;  (progn (if my-org-protocol-flag (delete-frame))
+;     (setq my-org-protocol-flag nil)))
+;(defadvice org-capture-kill (after delete-frame-at-end activate)
+;  "Delete frame at capture abort"
+;  (progn (if my-org-protocol-flag (delete-frame))
+;     (setq my-org-protocol-flag nil)))
 (defadvice org-protocol-capture (before set-org-protocol-flag activate)
   (setq my-org-protocol-flag t))
 
