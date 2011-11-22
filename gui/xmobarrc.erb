@@ -20,5 +20,5 @@ Config { font = "<%= hostname == 'ginko' ? '-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       <% spaces = (hostname == 'ginko') ? '   ' : ' ' %>, template = "%StdinReader% }{ <%= hostname == 'ginko' ? ('<fc=#444444>[</fc><fc=#ee9a00>playing:</fc> %mpd%<fc=#444444>]</fc>' . spaces) : '' %><fc=#444444>[</fc>%cpu% <fc=#444444>*</fc> %cpufreq%<fc=#444444>]</fc><%= spaces %><fc=#444444>[</fc>%memory%<fc=#444444>]</fc><%= spaces %><fc=#444444>[</fc>%wlan0%<fc=#444444>]</fc><%= spaces %><fc=#444444>[</fc>Batt: %battery%<fc=#444444>]</fc><%= spaces %><fc=#444444>[</fc><fc=#ee9a00>%date%</fc><fc=#444444>]</fc><%= spaces %><fc=#444444>[</fc>Vol: %volume%<fc=#444444>]</fc> %CYVR%"
+       <% spaces = (hostname == 'ginko') ? '   ' : ' ' %>, template = "%StdinReader% }{ <%= hostname == 'ginko' ? ('<fc=#444444>[</fc><fc=#ee9a00>playing:</fc> %mpd%<fc=#444444>]</fc>' + spaces) : '' %><fc=#444444>[</fc>%cpu% <fc=#444444>*</fc> %cpufreq%<fc=#444444>]</fc><%= spaces %><fc=#444444>[</fc>%memory%<fc=#444444>]</fc><%= spaces %><fc=#444444>[</fc>%wlan0%<fc=#444444>]</fc><%= spaces %><fc=#444444>[</fc>Batt: %battery%<fc=#444444>]</fc><%= spaces %><fc=#444444>[</fc><fc=#ee9a00>%date%</fc><fc=#444444>]</fc><%= spaces %><fc=#444444>[</fc>Vol: %volume%<fc=#444444>]</fc> %CYVR%"
        }
