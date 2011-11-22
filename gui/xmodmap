@@ -81,11 +81,11 @@ keycode 105 = Control_R
 
 ! arrows (normal)
 keycode 166 = XF86ApplicationLeft
-keycode 111 = Up
+keycode 111 = Up Up Up Up
 keycode 167 = XF86ApplicationRight
-keycode 113 = Left
-keycode 116 = Down
-keycode 114 = Right
+keycode 113 = Left Left Left
+keycode 116 = Down Down Down Down
+keycode 114 = Right Right Right
 
 ! arrows (Fn)
 keycode 174 = XF86AudioStop

@@ -169,9 +169,11 @@
 Message can be specified either by a path pointing inside a
 Maildir, or by Message-ID."
   (interactive "MPath or Message-ID: ")
-  (shell-command
-   (format "urxvt -e %s %s"
-       (substitute-in-file-name "$HOME/bin/mutt-open") message)))
+  ;(shell-command
+  ; (format "urxvt -e %s %s &"
+  ;     (substitute-in-file-name "$HOME/bin/mutt-open") message)))
+  (start-process "org-doc-process" "*Messages*" "urxvt"
+     "-e" (substitute-in-file-name "$HOME/bin/mutt-open") message))
 
 ;; add support for "mutt:ID" links
 (org-add-link-type "mutt" 'open-mail-in-mutt)

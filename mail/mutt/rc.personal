@@ -90,6 +90,7 @@ save-hook "~f kitching" =Personal
 save-hook "~f louiedinh" =Personal
 save-hook "~f ^hltn@shaw\.ca$" "=Jobs.Math I Can Do"
 save-hook "~h sprouts-volunteers@googlegroups\.com" "=University.Sprouts"
+save-hook "~b CRAIGSLIST.ADVISORY.---.AVOID.SCAMS.BY.DEALING.LOCALLY" =Craigslist
 
 #####################################################################
 # keystroke/gui customization
