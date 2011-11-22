@@ -89,6 +89,7 @@ save-hook "~f ^ubcimprov@gmail\.com$" =University
 save-hook "~f kitching" =Personal
 save-hook "~f louiedinh" =Personal
 save-hook "~f ^hltn@shaw\.ca$" "=Jobs.Math I Can Do"
+save-hook "~h sprouts-volunteers@googlegroups\.com" "=University.Sprouts"
 
 #####################################################################
 # keystroke/gui customization
