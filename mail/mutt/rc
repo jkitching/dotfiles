@@ -133,6 +133,7 @@ color index green black '(~f"Windy Hill Estate.*")'
 color index green black '(~f"Cheryl Kitching.*")'
 color index green black '(~f"Maria Ivanova.*")'
 color index green black '(~f"Ryan Kitching.*")'
+color index green black '(~f"Chris Kleinknecht.*")'
 color index blue black '(~f"Facebook")'
 
 color header cyan black .
