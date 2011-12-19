@@ -32,10 +32,10 @@
   ln -s .dropdata/Dropbox ~/dropbox
 
   # org-mode
-  sudo yaourt -S emacs-org-mode mu
-  mu index
-  sudo pacman -S perl-mailtools
-  (crontab -l ; echo "*/5 * * * * mu index") | crontab -
+  sudo yaourt -S emacs-org-mode notmuch
+  notmuch new
+  sudo pacman -S perl-mailtools xsel
+  (crontab -l ; echo "*/5 * * * * notmuch new") | crontab -
 
 == Template files
 
