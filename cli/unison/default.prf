@@ -19,3 +19,6 @@ ignore = Name work/tasktop/workspaces
 ignore = Name .*.swp
 ignore = Name .vim/.netrwhist
 ignore = Name work/websites/Peace Arch Soccer/pasoccer
+
+# Merging program
+merge = Name * -> urxvt -e vimdiff CURRENT1 CURRENT2

@@ -82,7 +82,7 @@ alias pacman="pacman-color"
 alias yaourt="yaourt --noconfirm"
 alias mplayer="mplayer -softvol -softvol-max 1000"
 alias mplayerpitch="mplayer -softvol -softvol-max 1000 -af scaletempo"
-alias cdmv="renamealbum --dest /mnt/storage/incoming/albums"
+cdmv () { renamealbum --dest "${@: -1}" "${@[1, -2]}" }
 alias usblp="sudo modprobe usblp && sleep 3 && sudo rmmod usblp"
 alias rtl="sudo rmmod rtl8192se && sleep 1 && sudo modprobe rtl8192se"
 alias alsamixer="alsamixer -c 0"
@@ -106,6 +106,7 @@ alias rmus="ssh ginko -tC ncmpcpp"
 alias todo="emacs ~/dropbox/org/todo.org"
 alias kindlegen="ssh kindle dbus-send --system /default com.lab126.powerd.resuming int32:1"
 start () { sudo /etc/init.d/"$1" start }
+restart () { sudo /etc/init.d/"$1" restart }
 stop () { sudo /etc/init.d/"$1" stop }
 #rm () { mv $* /tmp/wastebasket }
 zget () {
@@ -194,7 +195,11 @@ setopt nohup
 compinit
 promptinit
 
+# ctrl+b hides current command and allows another
 bindkey "^B" push-line
+
+# shift-tab reverse of tab
+bindkey '^[[Z' reverse-menu-complete
 
 # custom prompt
 #prompt fire
