@@ -3,6 +3,8 @@
 keycode 9   = Escape
 keycode 174 = XF86AudioLowerVolume
 keycode 176 = XF86AudioRaiseVolume
+keycode 122 = XF86AudioLowerVolume
+keycode 123 = XF86AudioRaiseVolume
 
 ! navigation buttons
 keycode 112 = Prior
@@ -92,6 +94,11 @@ keycode 174 = XF86AudioStop
 keycode 173 = XF86AudioPrev
 keycode 172 = XF86AudioPlay
 keycode 171 = XF86AudioNext
+
+! special buttons (Logitech keyboard)
+keycode 180 = XF86WWW
+keycode 163 = XF86Mail
+keycode 225 = XF86Search
 
 ! Original key layout:
 ! 
