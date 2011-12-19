@@ -120,6 +120,17 @@ let g:Tex_CompileRule_pdf = 'dvipdf $*.dvi'
 
 au! BufRead,BufNewFile *.otl set filetype=vo_base nolist
 
+" -------- Email --------------------------------------------------------
+
+" Override colors for different quote-levels in emails.
+hi mailQuoted1 ctermfg=darkyellow
+hi mailQuoted2 ctermfg=darkgreen
+hi mailQuoted3 ctermfg=darkmagenta
+hi mailQuoted4 ctermfg=darkmagenta
+hi mailQuoted5 ctermfg=darkmagenta
+hi mailQuoted6 ctermfg=darkmagenta
+
+
 " -------- ctags/taglist ------------------------------------------------
 
 " don't show variables for php!
