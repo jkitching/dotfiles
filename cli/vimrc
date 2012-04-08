@@ -57,10 +57,6 @@ endfunction
 " allow toggling of insert-paste mode
 set pastetoggle=<F2>
 
-" -------- CS 415 uses lots of tabs --------------------------------------
-
-autocmd BufNewFile,BufRead ~/.sync/school/cs415/{,*/{,*/{,*/{,*/{,*/{,*/}}}}}}*.{c,S,s,h} set nolist noexpandtab
-
 " -------- Prolog --------------------------------------------------------
 
 "autocmd BufNewFile,BufRead ~/school/cs312/*.pl set filetype=prolog
