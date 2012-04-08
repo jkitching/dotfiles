@@ -28,12 +28,12 @@
 $(function() {
   $(".onegpad").hide();
   $("#vr-header").hide();
+  $("#gb").hide();
   $('head').append('<style type="text/css">' + stylesheet() + '</style>');
 });
 
 function stylesheet() {
   return " \
-/* Copyright 2011 Google Inc. All Rights Reserved. */ \
 #calcontent.eui-t .dp-cell { \
 	padding: 2px; \
 } \

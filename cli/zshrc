@@ -53,6 +53,7 @@ export PATH="/opt/mathematica/bin:$PATH"
 export PATH="/opt/squeak/bin:$PATH"
 export PATH="/opt/android-sdk/tools:$PATH"
 export PATH="/opt/android-sdk/platform-tools:$PATH"
+export PATH="/opt/komodo/bin:$PATH"
 
 # system environment variables
 export EDITOR="vim"
@@ -129,14 +130,21 @@ zget () {
 # rails and git aliases
 alias rmig="rake db:migrate"
 alias rch="rails generate migration"
+alias rcon="rails console"
 
 # quick folders
-export cs448b="$HOME/school/cs448b"
-alias 448="cd ~cs448b"
-export cs317="$HOME/school/cs317"
 alias 317="cd ~cs317"
+export cs317="$HOME/school/cs317"
+alias 340="cd ~cs340"
+export cs340="$HOME/school/cs340"
+alias 415="cd ~cs415"
+export cs415="$HOME/school/cs415"
+alias 448="cd ~cs448b"
+export cs448b="$HOME/school/cs448b"
 export film="$HOME/school/asia365"
 alias film="cd $film"
+export jp="$HOME/school/asia360b"
+alias jp="cd $jp"
 export chin="$HOME/school/chinese"
 export coop="$HOME/school/co-op"
 export tasktop="$HOME/work/tasktop"
@@ -251,6 +259,7 @@ alias -s jpg=feh
 alias -s jpeg=feh
 alias -s gif=feh
 alias -s pdf=evince
+alias -s ppt=powerpoint
 
 alias -g GV='| grep -v '
 alias -g G='| grep '

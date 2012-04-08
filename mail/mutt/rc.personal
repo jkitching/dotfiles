@@ -101,6 +101,7 @@ save-hook "~b CRAIGSLIST.ADVISORY.---.AVOID.SCAMS.BY.DEALING.LOCALLY" =Craigslis
 macro index,pager 1 "<change-folder>=INBOX<enter>"
 macro index,pager 2 "<change-folder>=INBOX.Facebook<enter>"
 macro index,pager 3 "<change-folder>=INBOX.Actionable<enter>"
+macro index,pager 4 "<change-folder>=Mailing<tab>.Google<tab><enter>"
 
 # Not sure why this can't be \Cg...
 macro index,pager G "<pipe-message>cat | viewhtmlmsg &<enter>"

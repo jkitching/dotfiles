@@ -66,11 +66,11 @@ myNumlockMask   = mod2Mask
 --
 myWorkspaces    = [ "1|org"
                   , "2|web"
-                  , "3|cs317"
-                  , "4|cs448b"
-                  , "5|film"
+                  , "3|cs340"
+                  , "4|cs415"
+                  , "5|japan"
                   , "6|micd"
-                  , "7|android"
+                  , "7|micd2"
                   , "8|chin"
                   , "9|extra"
                   , "0|music"]
