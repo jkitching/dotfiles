@@ -1,5 +1,6 @@
 audio/mpeg; { set -m \; /bin/mv -T %s %s.mv \; ( urxvt -e mplayer %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a 
 application/pdf; { set -m \; /bin/mv -T %s %s.mv \; ( evince %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a 
+image/png; { set -m \; /bin/mv -T %s %s.mv \; ( firefox %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a 
 image/jpeg; { set -m \; /bin/mv -T %s %s.mv \; ( firefox %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a 
 application/vnd.openxmlformats-officedocument.wordprocessingml.document; { set -m \; /bin/mv -T %s %s.mv \; ( lowriter %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a 
 application/msword; { set -m \; /bin/mv -T %s %s.mv \; ( lowriter %s.mv >/dev/null 2>&1 \; /bin/rm %s.mv \; ) & } \; disown -a 
