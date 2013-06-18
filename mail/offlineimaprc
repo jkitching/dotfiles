@@ -28,7 +28,7 @@ preauthtunnel = ssh -q jkweb.ca /usr/libexec/dovecot/imap
 maxconnections = 2
 holdconnectionopen = no
 folderfilter = lambda foldername: \
-  foldername in ['INBOX', 'INBOX.Facebook', 'Sent']
+  foldername in ['INBOX', 'INBOX.Facebook', 'INBOX.Actionable', 'INBOX.Reference', 'Sent']
 
 [Repository remote2]
 type = IMAP
@@ -40,4 +40,4 @@ preauthtunnel = ssh -q jkweb.ca /usr/libexec/dovecot/imap
 maxconnections = 5
 holdconnectionopen = no
 folderfilter = lambda foldername: \
-  foldername not in ['INBOX', 'INBOX.Facebook', 'Sent']
+  foldername not in ['INBOX', 'INBOX.Facebook', 'INBOX.Actionable', 'INBOX.Reference', 'Sent']
