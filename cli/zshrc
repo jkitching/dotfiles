@@ -57,7 +57,7 @@ export PATH="/opt/komodo/bin:$PATH"
 
 # system environment variables
 export EDITOR="vim"
-export BROWSER="firefox"
+export BROWSER="chromium"
 export MAILDIR=`echo ~/.maildir(:a)`
 
 # listing aliases
@@ -77,9 +77,9 @@ alias synergy="killall synergyc 2>/dev/null; nohup synergyc -1 ginko >/dev/null 
 alias vnc="rx11vnc -fs -l linolium $DESKTOP"
 alias kb="setxkbmap -rules xorg -model logic -layout 'us,th' -option 'grp:alt_shift_toggle'; xmodmap ~/.xmodmap; xset r rate 220 27"
 alias binupdate="bin-list >| /tmp/linolium-dmenu"
-alias preview="feh -F -Z -d"
+alias browse="feh -F -Z -d"
 alias umount="fusermount -u"
-alias pacman="pacman-color"
+#alias pacman="pacman-color"
 alias yaourt="yaourt --noconfirm"
 alias mplayer="mplayer -softvol -softvol-max 1000"
 alias mplayerpitch="mplayer -softvol -softvol-max 1000 -af scaletempo"
@@ -128,6 +128,8 @@ zget () {
 }
 
 # rails and git aliases
+alias gs="git status"
+alias gam="git commit -am"
 alias rmig="rake db:migrate"
 alias rch="rails generate migration"
 alias rcon="rails console"
