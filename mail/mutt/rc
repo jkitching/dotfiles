@@ -39,8 +39,8 @@ set menu_scroll=yes
 
 # Hide all headers, unignore important ones, and reorder them for skimmability.
 ignore *
-unignore Date: From: Organization: To: Cc: Reply-To: Subject:
-hdr_order Date: Subject: From: To: Cc: Reply-To: Organization:
+unignore Date: From: Organization: To: Cc: Reply-To: Subject: X-Bogosity:
+hdr_order Date: Subject: From: To: Cc: Reply-To: Organization: X-Bogosity:
 
 auto_view text/html
 alternative_order text/plain text/html
@@ -49,6 +49,7 @@ set wait_key=no # don't ask for a key after a shell command
 set auto_tag=no # require "tag-prefix" (;) typed for group operations
 set pager_stop # don't fall thorugh to the next message in the pager
 set folder_format="%2C %t %N %8s %d %f"
+set index_format="%4C %?X?%X& ? %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
 
 # re-arrange status bars and show pager on message view
 set help=no
@@ -215,6 +216,20 @@ set query_command="goobook query '%s'"
 bind editor <Tab> complete-query
 bind editor ^T complete
 macro index,pager a "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
+
+#####################################################################
+# notmuch-mutt
+#####################################################################
+
+macro index <F8> \
+      "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt --prompt search<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>" \
+      "notmuch: search mail"
+macro index <F9> \
+      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt thread<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter><enter-command>set wait_key<enter>" \
+      "notmuch: reconstruct thread"
+#macro index <F6> \
+#      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt tag -inbox<enter>" \
+#      "notmuch: remove message from inbox"
 
 #####################################################################
 # status format
