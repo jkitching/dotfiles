@@ -24,6 +24,7 @@ import XMonad.Hooks.SetWMName
 import XMonad.Prompt
 import XMonad.Prompt.Workspace
 import XMonad.Util.Run(spawnPipe)
+import XMonad.Hooks.EwmhDesktops
 import IO(hPutStrLn)
 kill8 ss | Just w <- W.peek ss = (W.insertUp w) $ W.delete w ss | otherwise = ss
 
@@ -66,13 +67,13 @@ myNumlockMask   = mod2Mask
 --
 myWorkspaces    = [ "1|org"
                   , "2|web"
-                  , "3|cs340"
-                  , "4|cs415"
-                  , "5|japan"
-                  , "6|micd"
-                  , "7|micd2"
-                  , "8|chin"
-                  , "9|extra"
+                  , "3|"
+                  , "4|"
+                  , "5|"
+                  , "6|"
+                  , "7|"
+                  , "8|micd"
+                  , "9|china"
                   , "0|music"]
 
 -- Border colors for unfocused and focused windows, respectively.
@@ -144,9 +145,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- toggle the status bar gap
     -- TODO, update this binding with avoidStruts , ((modMask              , xK_b     ),
+    , ((modMask              , xK_s     ), sendMessage ToggleStruts)
 
     -- Quit xmonad
-     , ((modMask .|. shiftMask, xK_BackSpace ), io (exitWith ExitSuccess))
+    , ((modMask .|. shiftMask, xK_BackSpace ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
     , ((modMask              , xK_q     ), restart "xmonad" True)
@@ -337,5 +339,6 @@ defaults = defaultConfig {
         layoutHook         = myLayout,
         manageHook         = manageDocks <+> myManageHook <+> manageHook defaultConfig,
         --logHook            = myLogHook,
-        startupHook        = myStartupHook
+        startupHook        = myStartupHook,
+        handleEventHook    = fullscreenEventHook
     }
