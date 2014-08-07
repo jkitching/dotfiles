@@ -55,12 +55,14 @@ fi
 # Start redshift
 if [ $(hostname) == "ginko" ]; then
 	# Vancouver
-	redshift -l 49.2618:-123.2415 -t 6500:5000 &
+	#redshift -l 49.2618:-123.2415 -t 6500:5000 &
 	# Beijing
-	#redshift -l 39.88056,116.407839 -t 6500:6500 &
+	redshift -l 39.88056,116.407839 -t 6500:6500 &
 elif [ $(hostname) == "jimmy" ]; then
-	redshift -l 49.2618:-123.2415 -t 6500:4500 &
-	#redshift -l 39.88056,116.407839 -t 6500:4500 &
+	# Vancouver
+	#redshift -l 49.2618:-123.2415 -t 6500:4500 &
+	# Beijing
+	redshift -l 39.88056,116.407839 -t 6500:4500 &
 fi
 
 # Keyboard stuff

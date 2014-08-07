@@ -1,3 +1,20 @@
 # Write your default config options here!
+#
+## Set font.
+#font=/usr/share/fonts/TTF/odokai.ttf
+#
+# Set font encoding.
+subfont-encoding=unicode
 
+# Set subtitle file encoding.
+unicode=yes
+utf8=yes
 
+# Enable stylized subtitles
+ass=yes
+embeddedfonts=yes
+ass-font-scale=1.6
+ass-hinting=3
+#subfont-osd-scale=1.5
+#subfont-text-scale=2.5
+ass-color=ffffff00
