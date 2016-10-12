@@ -57,10 +57,14 @@ class Dotfile
     @src = File.realpath(file)
     parts = file.split '/'
     @category = parts.shift
-    real_file = '.' + parts.join('/').sub('.erb', '')
+    real_file = (bin? ? 'bin/' : '.') + parts.join('/').sub('.erb', '')
     @dest = File.join(ENV['HOME'], real_file)
     @pretty_dest = File.join('~', real_file)
     @dest_dir = File.dirname @dest
+  end
+
+  def bin?
+    @category == 'bin'
   end
 
   def identical?

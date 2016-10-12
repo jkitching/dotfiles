@@ -1,0 +1,3 @@
+#!/bin/bash
+
+i3lock -i <(import -window root png:- | convert -blur -10x8 - png:-)
