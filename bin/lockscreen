@@ -1,3 +1,17 @@
 #!/bin/bash
 
-i3lock -i <(import -window root png:- | convert -blur -10x8 - png:-)
+# Tries to use GraphicsMagick if available (faster image processing).
+if command -v gm >/dev/null 2>&1; then
+  GM=""
+else
+  GM=""
+fi
+
+PIPE=$(mktemp -u --suffix=.png)
+mkfifo $PIPE
+
+scrot $PIPE &
+i3lock -i <(cat $PIPE | $GM convert -blur -10x8 - png:-)
+rm $PIPE
+
+#i3lock -i <($GM import -window root png:- | $GM convert -blur -10x8 - png:-)
