@@ -1,13 +1,16 @@
 [user]
 	email = joel@jkweb.ca
 	name = Joel Kitching
+[core]
+	excludesfile = ~/.gitignore
 [color]
+	ui = auto
 	branch = auto
 	diff = auto
 	status = auto
 [color "branch"]
 	current = yellow reverse
-	local = yellow 
+	local = yellow
 	remote = green
 [color "diff"]
 	meta = yellow bold
@@ -20,3 +23,14 @@
 	untracked = cyan
 [merge]
 	tool = vimdiff
+[push]
+	default = simple
+[commit]
+	template = ~/.git-commit-template.txt
+	verbose = true
+[status]
+	submoduleSummary = true
+[diff]
+	context = 3
+[alias]
+	conflicts = diff --name-only --diff-filter=U
